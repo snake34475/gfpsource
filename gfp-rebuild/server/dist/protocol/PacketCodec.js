@@ -10,9 +10,12 @@ class PacketDecoder {
         let userId;
         if (length > 4) {
             try {
-                const dataView = new DataView(buffer.buffer, buffer.byteOffset + 8, length - 4);
-                data = this.decodeBody(commandId, dataView);
-                userId = this.extractUserId(commandId, dataView);
+                const bodyLength = Math.min(length - 4, buffer.length - 8);
+                if (bodyLength > 0) {
+                    const dataView = new DataView(buffer.buffer, buffer.byteOffset + 8, bodyLength);
+                    data = this.decodeBody(commandId, dataView);
+                    userId = this.extractUserId(commandId, dataView);
+                }
             }
             catch (e) {
                 console.warn("[PacketDecoder] Failed to decode body:", e);
@@ -30,35 +33,43 @@ class PacketDecoder {
     static decodeBody(commandId, view) {
         const data = {};
         let offset = 0;
+        const viewLength = view.byteLength;
         try {
             switch (commandId) {
-                case 1001: // MOVE
-                    data.mapId = view.getUint32(offset, true);
-                    offset += 4;
-                    data.pos = {
-                        x: view.getUint32(offset, true),
-                        y: view.getUint32(offset + 4, true),
-                    };
-                    offset += 8;
-                    data.speed = view.getUint8(offset);
-                    offset += 1;
-                    data.moveType = view.getUint8(offset);
+                case 1001: // MOVE: mapId(4) + pos(8) + speed(1) + moveType(1) = 14 bytes
+                    if (offset + 4 <= viewLength) {
+                        data.mapId = view.getUint32(offset, true);
+                        offset += 4;
+                    }
+                    if (offset + 8 <= viewLength) {
+                        data.pos = { x: view.getUint32(offset, true), y: view.getUint32(offset + 4, true) };
+                        offset += 8;
+                    }
+                    if (offset + 1 <= viewLength) {
+                        data.speed = view.getUint8(offset);
+                        offset += 1;
+                    }
+                    if (offset + 1 <= viewLength) {
+                        data.moveType = view.getUint8(offset);
+                    }
                     break;
-                case 1002: // STAND
-                    data.mapId = view.getUint32(offset, true);
-                    offset += 4;
-                    data.pos = {
-                        x: view.getUint32(offset, true),
-                        y: view.getUint32(offset + 4, true),
-                    };
-                    offset += 8;
-                    data.direction = view.getUint8(offset);
+                case 1002: // STAND: mapId(4) + pos(8) + direction(1) = 13 bytes
+                    if (offset + 4 <= viewLength) {
+                        data.mapId = view.getUint32(offset, true);
+                        offset += 4;
+                    }
+                    if (offset + 8 <= viewLength) {
+                        data.pos = { x: view.getUint32(offset, true), y: view.getUint32(offset + 4, true) };
+                        offset += 8;
+                    }
+                    if (offset + 1 <= viewLength) {
+                        data.direction = view.getUint8(offset);
+                    }
                     break;
-                case 1003: // JUMP
-                    data.pos = {
-                        x: view.getUint32(offset, true),
-                        y: view.getUint32(offset + 4, true),
-                    };
+                case 1003: // JUMP: pos(8) = 8 bytes
+                    if (offset + 8 <= viewLength) {
+                        data.pos = { x: view.getUint32(offset, true), y: view.getUint32(offset + 4, true) };
+                    }
                     break;
                 case 1004: // PVP_MOVE
                     data.pos = {
@@ -177,28 +188,9 @@ class PacketEncoder {
         }
         else if (typeof value === "number") {
             if (Number.isInteger(value)) {
-                if (value >= 0) {
-                    if (value <= 255) {
-                        const buf = Buffer.alloc(1);
-                        buf.writeUInt8(value, 0);
-                        return buf;
-                    }
-                    else if (value <= 65535) {
-                        const buf = Buffer.alloc(2);
-                        buf.writeUInt16LE(value, 0);
-                        return buf;
-                    }
-                    else {
-                        const buf = Buffer.alloc(4);
-                        buf.writeUInt32LE(value, 0);
-                        return buf;
-                    }
-                }
-                else {
-                    const buf = Buffer.alloc(4);
-                    buf.writeInt32LE(value, 0);
-                    return buf;
-                }
+                const buf = Buffer.alloc(4);
+                buf.writeInt32LE(value, 0);
+                return buf;
             }
             else {
                 const buf = Buffer.alloc(4);
