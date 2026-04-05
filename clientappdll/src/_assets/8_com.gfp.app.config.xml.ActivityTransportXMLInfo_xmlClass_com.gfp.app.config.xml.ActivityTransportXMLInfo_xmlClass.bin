@@ -1,0 +1,18 @@
+<!--
+	任务追踪面板，快捷跳转点
+	地图跳转格式：pos="MAP_2"
+	NPC跳转格式：pos="NPC_10001"
+	关卡跳转格式：pos="TOLLGATE_1"
+-->
+<transports>
+	<transport name="武圣大殿" prio="0" pos="MAP_2"/>
+	<transport name="万博会" prio="0" pos="12,1428,438"/>
+	<transport name="勇气武斗场" prio="0" pos="NPC_10072"/>
+	<transport name="伏魔塔" prio="0" pos="MAP_24"/>
+	<transport name="虚空炼狱" prio="0" pos="MAP_64"/>
+	<transport name="凌霄宝塔" prio="0" pos="69,563,557"/>
+	<transport name="九天飞凰塔" prio="0" pos="71,546,536"/>
+	<transport name="石猛练功房" prio="0" title="【经验】" pos="MAP_1056_open:ZazenPanel"/>
+	<transport name="经验梦境（仙兽）" prio="0" title="【经验】" pos="PANEL_SummonJingYanMengJingPanel"/>
+	<transport name="仙兽狂欢谷" prio="0" title="【仙兽】" pos="PANEL_LittleSevenDevilTraining"/>
+</transports>

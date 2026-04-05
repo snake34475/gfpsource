@@ -1,0 +1,25 @@
+<!--
+	SuggestedActivities :当下推荐的活动
+	icon：活动图标，1 = hot， 2 = new ...
+	点击活动按钮的功能类，待扩展
+-->
+<Activities>
+	<Activity id="1" name="" icon="2" func="" params="">
+		<time><![CDATA[时间]]></time>
+		<desc><![CDATA[活动一：开通3、6或12个月超灵侠士可直接获得30、60或120点侠士值]]></desc>
+	</Activity>
+	<Activity id="2" name="" icon="1" func="" params="">
+		<time><![CDATA[时间]]></time>
+		<desc><![CDATA[活动二：超灵侠士每天增加1点侠士值，年费超灵侠士每天增加3点侠士值]]></desc>
+	</Activity>
+	<Activity id="3" name="" icon="1" func="" params="">
+		<time><![CDATA[时间]]></time>
+		<desc><![CDATA[活动三：用米米卡每开通一个月超灵侠士可直接获得20点侠士值]]></desc>
+	</Activity>
+	<Activity id="4" name="" icon="1" func="" params="">
+		<time><![CDATA[时间]]></time>
+		<desc><![CDATA[活动三：用米米卡充值额外获得20点侠士值]]></desc>
+	</Activity>
+	
+	<SuggestedActivities id="1|2|4"/>
+</Activities>

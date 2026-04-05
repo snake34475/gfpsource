@@ -1,0 +1,56 @@
+<!-- sysTime表下活动对应id -->
+<!---->
+<activity>
+	<node id="0" name="智力大比拼" lv="10" sysTime="147" trans="NPC_10007" offset="-5">
+		<advertise><![CDATA[答题得经验，稀有仙兽等你拿！]]></advertise>
+		<desc><![CDATA[功夫派智力大比拼，边玩边答题！]]></desc>
+		<rewards><![CDATA[海量经验、二阶仙兽菊石]]></rewards>
+	</node>
+	<!-- <node id="1" name="十六强争霸" lv="10" sysTime="11" trans="NPC_10150" offset="0">
+		<advertise><![CDATA[单人pk，冠军花落谁家？]]></advertise>
+		<desc><![CDATA[每周诞生一位冠军！]]></desc>
+		<rewards><![CDATA[功夫豆、仙兽]]></rewards>
+	</node>
+	<node id="2" name="城战" lv="50" sysTime="113" trans="NPC_10437" offset="0">
+		<advertise><![CDATA[城战5v5，激情大pk！]]></advertise>
+		<desc><![CDATA[最热闹的pvp！]]></desc>
+		<rewards><![CDATA[高级宝石、坐骑刀锋战虎]]></rewards>
+	</node>
+	<node id="3" name="黑暗武斗场" lv="60" sysTime="133" trans="NPC_10430" offset="0">
+		<advertise><![CDATA[1v1,2v2实力的真正较量！]]></advertise>
+		<desc><![CDATA[可拾取对方掉落道具！]]></desc>
+		<rewards><![CDATA[大量功夫豆]]></rewards>
+	</node>
+	<node id="4" name="龙虎斗" lv="30" sysTime="142" trans="NPC_10150" offset="0">
+		<advertise><![CDATA[最公平的pvp战斗！]]></advertise>
+		<desc><![CDATA[积分换奖励！]]></desc>
+		<rewards><![CDATA[银票、冰河猛犸]]></rewards>
+	</node>-->
+<!-- 	<node id="5" name="楼兰献宝" lv="10" sysTime="141" trans="NPC_10142" offset="0">
+		<advertise><![CDATA[辛巴达献宝，每天6场]]></advertise>
+		<desc><![CDATA[第一场免费，其他场次需要学院勋章。]]></desc>
+		<rewards><![CDATA[金龙珠、五级魔石礼包、九级宝石]]></rewards>
+	</node> -->
+	<!--<node id="6" name="三雄争霸" lv="45" sysTime="148" trans="NPC_10410" offset="0">
+		<advertise><![CDATA[全新三人竞技，魔王模式开启，谁与争锋？]]></advertise>
+		<desc><![CDATA[全新1v2竞技模式，pk最强魔王。]]></desc>
+		<rewards><![CDATA[金色印记、天降神炎、九天凤凰]]></rewards>
+	</node>-->
+	<!--
+	<node id="7" name="剑仙大战藤儿" lv="30" sysTime="149" trans="MAP_1054" offset="0">
+		<advertise><![CDATA[剑仙大战藤儿，这是怎么一回事？]]></advertise>
+		<desc><![CDATA[世界boss，谁能击杀？]]></desc>
+		<rewards><![CDATA[高级首饰模具]]></rewards>
+	</node>
+	-->
+		<!--<node id="8" name="第三届万圣杯" lv="30" sysTime="78" trans="NPC_10159" offset="0">
+		<advertise><![CDATA[第三届万圣杯开赛，燃眉小鬼再次降临！]]></advertise>
+		<desc><![CDATA[参加万圣杯，捐献万圣灵石，获取丰厚奖励！]]></desc>
+		<rewards><![CDATA[狼多多飞升道具、燃眉小鬼、小恶魔翅膀包、金龙珠]]></rewards>
+	</node>	-->
+		<!--<node id="9" name="五倍经验" lv="1" sysTime="154" trans="PANEL_BossRoadMapPanel" offset="0">
+		<advertise><![CDATA[五倍经验，飞速升级！]]></advertise>
+		<desc><![CDATA[限时一小时五倍经验开启！]]></desc>
+		<rewards><![CDATA[打关卡经验是平时五倍]]></rewards>
+	</node>	-->
+</activity>

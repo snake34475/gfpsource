@@ -1,0 +1,89 @@
+<!-- 副职变身符相关配表 -->
+
+<!-- PaperID 变身符ID -->
+<!-- AppId 表现ID，与item_nor.xml里面ExID1字段对应 必填项 -->
+<!-- SkillId 增加额外的技能ID ，战斗skill.xml需要提供相应实现 选填项 默认为0 -->
+<!-- AddHp 增加额外的血量 ，默认为0 -->
+<!-- AddMp 增加额外的蓝量 ，默认为0 -->
+<!-- AddAtk 增加额外的攻击 ，默认为0 -->
+<!-- ResID 变成为其它角色的ID ，默认为0 -->
+
+<!-- InItem：需要消耗的物品 OutItem：产出的物品 均只支持物品，不支持装备和各种点数-->
+<!-- UseUniversal：为1表示该消耗的物品能被万能碎片代替，默认为0 -->
+
+<ChangeShape>
+
+	<Method PaperID="1300408" Name="狂暴黑熊" AppId="11066" SkillId="4221009" AddHp="1000" AddMp="0" AddAtk="0">
+		<InItem ID="1301001" Cnt="3" UseUniversal="1"/>
+		<OutItem ID="1300408" Cnt="1"/>
+	</Method>
+	<Method PaperID="1300409" Name="暴爪蜥蜴" AppId="11023" SkillId="4221008" AddHp="1000" AddMp="0" AddAtk="0">
+		<InItem ID="1301002" Cnt="3" UseUniversal="1"/>
+		<OutItem ID="1300409" Cnt="1"/>
+	</Method>
+	<Method PaperID="1300410" Name="小鼹鼠" AppId="11046" SkillId="4221001" AddHp="1000" AddMp="0" AddAtk="0">
+		<InItem ID="1301003" Cnt="3" UseUniversal="1"/>
+		<OutItem ID="1300410" Cnt="1"/>
+	</Method>
+	<Method PaperID="1300411" Name="赤眼猴" AppId="11049" SkillId="4221010" AddHp="1000" AddMp="0" AddAtk="0">
+		<InItem ID="1301004" Cnt="3" UseUniversal="1"/>
+		<OutItem ID="1300411" Cnt="1"/>
+	</Method>
+	<Method PaperID="1300412" Name="牛魔战士" AppId="11067" SkillId="4221003" AddHp="2000" AddMp="0" AddAtk="0">
+		<InItem ID="1301101" Cnt="5" UseUniversal="1"/>
+		<OutItem ID="1300412" Cnt="1"/>
+	</Method>
+	<Method PaperID="1300413" Name="扬子鳄" AppId="11071" SkillId="4221003" AddHp="2000" AddMp="0" AddAtk="0">
+		<InItem ID="1301102" Cnt="5" UseUniversal="1"/>
+		<OutItem ID="1300413" Cnt="1"/>
+	</Method>
+	<Method PaperID="1300414" Name="大刀螳螂" AppId="11074" SkillId="4221003" AddHp="2000" AddMp="0" AddAtk="0">
+		<InItem ID="1301103" Cnt="5" UseUniversal="1"/>
+		<OutItem ID="1300414" Cnt="1"/>
+	</Method>
+	<Method PaperID="1300805" Name="巴鲁" AppId="13008" SkillId="4221004" AddHp="3000" AddMp="0" AddAtk="0">
+		<InItem ID="1301201" Cnt="7" UseUniversal="1"/>
+		<OutItem ID="1300805" Cnt="1"/>
+	</Method>
+	<Method PaperID="1300808" Name="甲刺" AppId="13011" SkillId="4221005" AddHp="3000" AddMp="0" AddAtk="0">
+		<InItem ID="1301202" Cnt="7" UseUniversal="1"/>
+		<OutItem ID="1300808" Cnt="1"/>
+	</Method>
+	<Method PaperID="1300804" Name="脊旋" AppId="13007" SkillId="4221006" AddHp="3000" AddMp="0" AddAtk="0">
+		<InItem ID="1301203" Cnt="7" UseUniversal="1"/>
+		<OutItem ID="1300804" Cnt="1"/>
+	</Method>
+	<Method PaperID="1300806" Name="正无" AppId="13009" SkillId="4221007" AddHp="3000" AddMp="0" AddAtk="0">
+		<InItem ID="1301204" Cnt="7" UseUniversal="1"/>
+		<OutItem ID="1300806" Cnt="1"/>
+	</Method>
+	<Method PaperID="1300819" Name="派派" ResID="1" AppId="13650" SkillId="4221012" AddHp="5000" AddMp="0" AddAtk="0">
+		<InItem ID="1301206" Cnt="7" UseUniversal="1"/>
+		<OutItem ID="1300819" Cnt="1"/>
+	</Method>
+	<Method PaperID="1300820" Name="伊尔" ResID="2" AppId="13652" SkillId="4221013" AddHp="5000" AddMp="0" AddAtk="0">
+		<InItem ID="1301207" Cnt="7" UseUniversal="1"/>
+		<OutItem ID="1300820" Cnt="1"/>
+	</Method>
+	<Method PaperID="1300821" Name="大竹" ResID="3" AppId="13653" SkillId="4221014" AddHp="5000" AddMp="0" AddAtk="0">
+		<InItem ID="1301208" Cnt="7" UseUniversal="1"/>
+		<OutItem ID="1300821" Cnt="1"/>
+	</Method>
+	<Method PaperID="1300822" Name="敖天" ResID="4" AppId="13651" SkillId="4221015" AddHp="5000" AddMp="0" AddAtk="0">
+		<InItem ID="1301209" Cnt="7" UseUniversal="1"/>
+		<OutItem ID="1300822" Cnt="1"/>
+	</Method>
+	<Method PaperID="1300823" Name="大奔" ResID="5" AppId="13654" SkillId="4221016" AddHp="5000" AddMp="0" AddAtk="0">
+		<InItem ID="1301210" Cnt="7" UseUniversal="1"/>
+		<OutItem ID="1300823" Cnt="1"/>
+	</Method>
+	<Method PaperID="1300824" Name="雪灵" ResID="6" AppId="13655" SkillId="4221017" AddHp="5000" AddMp="0" AddAtk="0">
+		<InItem ID="1301211" Cnt="7" UseUniversal="1"/>
+		<OutItem ID="1300824" Cnt="1"/>
+	</Method>
+	<Method PaperID="1300817" Name="南瓜怪人" AppId="13035" SkillId="4221011" AddHp="3000" AddMp="0" AddAtk="0">
+		<InItem ID="1301205" Cnt="7" UseUniversal="1"/>
+		<OutItem ID="1300817" Cnt="1"/>
+	</Method>
+
+</ChangeShape>

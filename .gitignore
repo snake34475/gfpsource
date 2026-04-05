@@ -1,0 +1,18 @@
+# GFP Rebuild: ignore generated dependencies and builds
+
+# Node modules in any directory
+**/node_modules/
+
+# Built/compiled outputs
+client/dist/
+server/dist/
+
+# Test helper script
+test-client.js
+
+# Local environment files
+.env
+
+# OS specific files
+.DS_Store
+Thumbs.db

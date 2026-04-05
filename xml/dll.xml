@@ -1,0 +1,74 @@
+<taomee>
+	<Dll>
+		<!--  <item name="功夫大陆" path="dll/TaomeeLibraryDLL.swf"/>-->
+		<item name="装备信息" path="dll/ClientCoreDLL.swf"/>
+		<item name="技能信息" path="dll/ClientAppDLL.swf"/>
+	</Dll>
+	<Bean>
+		<!--=====================core=====================-->
+		<!--config-->
+		<!--=====================app=====================-->
+		<Bean id="SysActivate" class="com.gfp.app.systems.SysActivate"/>
+		<Bean id="ItemPickupCmdListener" class="com.gfp.app.cmdl.ItemPickupCmdListener"/>
+		<Bean id="ItemFallCmdListener" class="com.gfp.app.cmdl.ItemFallCmdListener"/>
+		<Bean id="GloryCmdListener" class="com.gfp.app.cmdl.GloryCmdListener"/>
+		<Bean id="GrowCmdListener" class="com.gfp.app.cmdl.GrowCmdListener" />
+		<Bean id="UserListCmdListener" class="com.gfp.app.cmdl.UserListCmdListener" />
+		<Bean id="StageUserListCmdListener" class="com.gfp.app.cmdl.StageUserListCmdListener" />
+		<Bean id="LeaveMapCmdListener" class="com.gfp.app.cmdl.LeaveMapCmdListener" />
+		<Bean id="MoveCmdListener" class="com.gfp.app.cmdl.MoveCmdListener" />
+		<Bean id="StandCmdListener" class="com.gfp.app.cmdl.StandCmdListener" />
+		<Bean id="MouseMoveCmdListener" class="com.gfp.app.cmdl.MouseMoveCmdListener" />
+		<Bean id="JumpCmdListener" class="com.gfp.app.cmdl.JumpCmdListener" />
+		<Bean id="ChangeClothCmdListener" class="com.gfp.app.cmdl.ChangeClothCmdListener" />
+		<Bean id="ChangeNameCmdListener" class="com.gfp.app.cmdl.ChangeNameCmdListener" />
+		<Bean id="DelayTestCmdListener" class="com.gfp.app.cmdl.DelayTestCmdListener" />
+		<Bean id="SkillCmdListener" class="com.gfp.app.cmdl.SkillCmdListener" />
+		<Bean id="BuffCmdListener" class="com.gfp.app.cmdl.BuffCmdListener" />
+		<Bean id="EquipDurabilityCmdListener" class="com.gfp.app.cmdl.EquipDurabilityCmdListener" />
+		<Bean id="ItemBuyCmdListener" class="com.gfp.app.cmdl.ItemBuyCmdListener" />
+		<Bean id="BruiseCmdListener" class="com.gfp.app.cmdl.BruiseCmdListener" />
+		<Bean id="FightCmdListener" class="com.gfp.app.cmdl.FightCmdListener" />
+		<Bean id="UserInfoController" class="com.gfp.app.user.UserInfoController" />
+		<Bean id="MessageAlarm" class="com.gfp.app.toolBar.MessageAlarm" />
+		<Bean id="StudySkillAnimat" class="com.gfp.app.cartoon.StudySkillAnimat" />
+		<!-- <Bean id="GetSkillStoneAnimat" class="com.gfp.app.cartoon.GetSkillStoneAnimat" /> -->
+		<Bean id="PreventAddictedListener" class="com.gfp.app.cmdl.PreventAddictedListener" />
+		<Bean id="VipCmdListener" class="com.gfp.app.cmdl.VipCmdListener" />
+		<Bean id="ChangePlayerViewCmdListener" class="com.gfp.app.cmdl.ChangePlayerViewCmdListener" />
+		<Bean id="UseExtandBagAnimat" class="com.gfp.app.cartoon.UseExtandBagAnimat" />
+		<Bean id="MailSysCmdListener" class="com.gfp.app.cmdl.MailSysCmdListener" />
+		<Bean id="HonorCmdListener" class="com.gfp.app.cmdl.HonorCmdListener"/>
+		<Bean id="ItemRollCmdListener" class="com.gfp.app.cmdl.ItemRollCmdListener"/>
+		<Bean id="TradeCmdListener" class="com.gfp.app.cmdl.TradeCmdListener"/>
+		<Bean id="JsBeanListener" class="com.gfp.app.cmdl.JsBeanListener"/>
+		<!--<Bean id="IceWaterCmdListener" class="com.gfp.app.cmdl.IceWaterCmdListener"/>-->
+		<Bean id="StorySO_1" class="com.gfp.app.storyProcess.localSO.StorySO_1"/>
+		<Bean id="NoticeCmdListener" class="com.gfp.app.cmdl.NoticeCmdListener"/>
+		<Bean id="ActivitySuggestionCmdListener" class="com.gfp.app.cmdl.ActivitySuggestionCmdListener"/>
+		<Bean id="HeromeetCmdListener" class="com.gfp.app.cmdl.HeromeetCmdListener"/>
+		<Bean id="InfoUserSpeedCmdListener" class="com.gfp.app.cmdl.InfoUserSpeedCmdListener"/>
+		<Bean id="PositionChangeCmdListener" class="com.gfp.app.cmdl.PositionChangeCmdListener"/>
+		<Bean id="DailyAwardCmdListener" class="com.gfp.app.cmdl.DailyAwardCmdListener"/>
+		<Bean id="BadPlusInCmdListener" class="com.gfp.app.cmdl.BadPlusInCmdListener"/>
+		<Bean id="MiniRoomCmdListener" class="com.gfp.app.cmdl.MiniRoomCmdListener"/>
+		<Bean id="HomeInfoCmdListener" class="com.gfp.app.cmdl.HomeInfoCmdListener"/>
+		<Bean id="FightTeamCmdListener" class="com.gfp.app.cmdl.FightTeamCmdListener"/>
+		<Bean id="PuzzleCmdListener" class="com.gfp.app.cmdl.PuzzleCmdListener"/>
+		<Bean id="ActivityCmdListener" class="com.gfp.app.cmdl.ActivityCmdListener"/>
+		<Bean id="QuickAddItemCmdListener" class="com.gfp.app.cmdl.QuickAddItemCmdListener"/>
+		<Bean id="QuickAddItemCmdListener2" class="com.gfp.app.cmdl.QuickAddItemCmdListener2"/>
+		<Bean id="TollgateLuckyBoxCmdListener" class="com.gfp.app.cmdl.TollgateLuckyBoxCmdListener"/>
+		<Bean id="SystemGlobalCmdListener" class="com.gfp.app.cmdl.SystemGlobalCmdListener"/>
+		<Bean id="RideCmdListener" class="com.gfp.app.cmdl.RideCmdListener"/>
+		<Bean id="RunMatchCmdListener" class="com.gfp.app.cmdl.RunMatchCmdListener"/>
+		<Bean id="ExpeditionMedalCmdListener" class="com.gfp.app.cmdl.ExpeditionMedalCmdListener"/>
+		<Bean id="SessionUpdateCmdListener" class="com.gfp.app.cmdl.SessionUpdateCmdListener"/>
+		<Bean id="AdvancedCmdListener" class="com.gfp.app.cmdl.AdvancedCmdListener"/>
+		<Bean id="InitTextMix" class="com.gfp.app.chat.InitTextMix"/>
+		<Bean id="ActionSynCmdListener" class="com.gfp.app.cmdl.ActionSynCmdListener"/>
+		<Bean id="SummonAuctionCmdListener" class="com.gfp.app.cmdl.SummonAuctionCmdListener"/>
+			<!--=====================test=====================-->
+		<Bean id="TestTool" class="com.gfp.app.test.TestTool" />
+	</Bean>
+</taomee>

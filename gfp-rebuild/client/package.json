@@ -1,0 +1,19 @@
+{
+  "name": "gfp-client",
+  "version": "1.0.0",
+  "description": "GFP Client - Protocol Layer",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/client.js",
+    "dev": "tsc && node dist/client.js"
+  },
+  "dependencies": {
+    "ws": "^8.16.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/ws": "^8.5.10",
+    "typescript": "^5.3.3"
+  }
+}

@@ -1,0 +1,106 @@
+<config name="gf" url="http://gf.61.com" sid="">
+  <Base url=""/>
+  <Res url="res/"/>
+  <Npc url="res/role/"/>
+  <Sound url="res/sound/"/>
+  <Effect url="res/effect/"/>
+  <BitmapEffect url="res/bitmapEffect/"/>
+  <Module url="module/"/>
+  <Item url="res/item/"/>
+  <MallIcon url="res/mallIcon/"/>
+  <Map url="res/map/"/>
+  <Glory url="res/glory/"/>
+  <SummonHandBook url="res/summonHandbook/"/>
+  <cardHandBook url="res/card/"/>
+  <activityIcon url="res/activity/"/>
+  <clientType>0</clientType>
+  <loginPanel url="res/login/LoginPanel.swf?1479450363"/>
+  <CharacterSelectPanel url="res/login/CharacterSelectPanel.swf?1479450363"/>
+  <ServerListPanel url="res/login/ServerListPanel.swf?1479450363"/>
+  <CreateCharModel url="res/login/CreateCharModel.swf?1479450363"/>
+  <ActivityTheme>机关重重</ActivityTheme>
+  <newsversion>286</newsversion>
+  <dailyTask>1</dailyTask>
+  <ServerMaxPeople>200</ServerMaxPeople>
+  <ServerVipMaxPeople>300</ServerVipMaxPeople>
+  <ipConfig>
+    <http url="http://kflogin.61.com/ip.txt"/>
+    <http cturl="http://telkflogin.61.com/ip.txt"/>
+    <http cncurl="http://cnckflogin.61.com/ip.txt"/>
+    <cdn url="http://gf.61.com/ip"/>
+    <Email ip="114.80.173.15" port="1863"/>
+    <DirSer ip="114.80.173.15" port="1863"/>
+    <SubServer ip="114.80.173.15" port="1863"/>
+    <Ct ip="114.80.98.41" port="1863"/>
+    <Ct2 ip="114.80.98.139" port="1863"/>
+    <Cnc ip="125.39.236.56" port="1863"/>
+    <KaiXin ip="27.131.221.208" port="1863"/>
+    <Proxy ip="114.80.173.15" port="1863"/>
+  </ipConfig>
+  <MainUrls>
+    <MainUrl clientType="0" url="http://gf.61.com"/>
+    <MainUrl clientType="1" url="http://gf.61.com"/>
+    <MainUrl clientType="2" url="http://www.kaixin001.com/!gfp/"/>
+    <MainUrl clientType="3" url="http://gf.61.com.tw/"/>
+  </MainUrls>
+  <serverName>
+    <node>艾尔大陆</node>
+    <node>武圣大殿</node>
+    <node>一气学院</node>
+    <node>十字路口</node>
+    <node>空中之城</node>
+    <node>谜之琥珀</node>
+    <node>功夫城</node>
+    <node>宝典之谜</node>
+    <node>倚天塔</node>
+    <node>虎丘</node>
+    <node>机关巷</node>
+    <node>试炼之路</node>
+    <node>矿坑</node>
+    <node>矿坑深处</node>
+    <node>野猪林</node>
+    <node>野猪林后山</node>
+    <node>矿山镇</node>
+    <node>当头一棒</node>
+    <node>风神之眼</node>
+    <node>碧海潮音</node>
+    <node>十字连击</node>
+    <node>灵光剑影</node>
+    <node>立地腾空</node>
+    <node>急速流星</node>
+    <node>离子风暴</node>
+    <node>风云棍法</node>
+    <node>回旋踢</node>
+    <node>回马枪</node>
+    <node>横扫千军</node>
+    <node>夜战八方</node>
+    <node>凌空飞腿</node>
+    <node>力斩千钧</node>
+    <node>波云斩</node>
+    <node>电光雷击</node>
+    <node>登云踢</node>
+    <node>惊风再起</node>
+    <node>剑荡八荒</node>
+    <node>流光绝影</node>
+    <node>先发制人</node>
+    <node>迅急无常</node>
+    <node>惊涛穿云</node>
+    <node>出云流星剑</node>
+    <node>顺水推舟</node>
+    <node>孤峰一线</node>
+    <node>白虹贯日</node>
+    <node>龙腾四海</node>
+    <node>狂风百战</node>
+    <node>日月争辉</node>
+    <node>傲视群雄</node>
+    <node>破天一式</node>
+    <node>劈山一击</node>
+    <node>惊天地裂</node>
+    <node>追魂脚</node>
+    <range index="0" down="54" top="99">1~10级进入</range>
+    <range index="1" down="100" top="130">21~50级进入</range>
+    <range index="2" down="131" top="1340">51~79级进入</range>
+    <special index="0" down="100" top="130"/>
+    <special index="1" down="1" top="50"/>
+  </serverName>
+</config>

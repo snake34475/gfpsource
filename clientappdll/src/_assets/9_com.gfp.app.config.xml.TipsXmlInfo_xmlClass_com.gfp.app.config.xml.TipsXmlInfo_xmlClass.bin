@@ -1,0 +1,89 @@
+<!-- tips等简单文字的配置 -->
+<!-- treasureHouse：陆半仙宝库 -->
+<tips>
+	<treasureHouse>
+		<post><![CDATA[<font color="#FF3C3C">我是陆半仙，以诚待人、买卖公平！<br>每周五, 周六, 周日下午14:00点准时重置库存。<br>行走江湖，安全第一，以物换物，各取所需。<br></font>]]></post>
+		<item id="2237"><![CDATA[14：00]]></item>
+		<item id="2238"><![CDATA[14：00]]></item>
+		<item id="2239"><![CDATA[14：00]]></item>
+		<item id="2240"><![CDATA[14：00]]></item>
+		<item id="2241"><![CDATA[14：00]]></item>
+		<item id="2242"><![CDATA[14：00]]></item>
+		<item id="2207"><![CDATA[14：00]]></item>
+		<item id="2210"><![CDATA[14：00]]></item>
+		<item id="2180"><![CDATA[14：00]]></item>
+		<item id="1171"><![CDATA[14：00]]></item>
+		<item id="1177"><![CDATA[14：00]]></item>
+		<item id="1178"><![CDATA[14：00]]></item>
+		<item id="1179"><![CDATA[14：00]]></item>
+		<item id="1180"><![CDATA[14：00]]></item>
+		<item id="1181"><![CDATA[14：00]]></item>
+		<item id="1182"><![CDATA[14：00]]></item>
+		<item id="1183"><![CDATA[14：00]]></item>
+		<item id="1184"><![CDATA[14：00]]></item>
+		<item id="1185"><![CDATA[14：00]]></item>
+		<item id="1186"><![CDATA[14：00]]></item>
+		<item id="1187"><![CDATA[14：00]]></item>
+		<item id="1188"><![CDATA[14：00]]></item>
+		<item id="1189"><![CDATA[14：00]]></item>
+		<item id="1190"><![CDATA[14：00]]></item>
+		<item id="1191"><![CDATA[14：00]]></item>
+		<item id="1205"><![CDATA[14：00]]></item>
+		<item id="1206"><![CDATA[14：00]]></item>
+		<item id="1207"><![CDATA[14：00]]></item>
+		<item id="1200"><![CDATA[14：00]]></item>
+		<item id="1228"><![CDATA[14：00]]></item>
+		<item id="1229"><![CDATA[14：00]]></item>
+		<item id="1135"><![CDATA[14：00]]></item>
+		<item id="1284"><![CDATA[14：00]]></item>
+		<item id="1288"><![CDATA[14：00]]></item>
+		<item id="1308"><![CDATA[14：00]]></item>
+		<item id="1309"><![CDATA[14：00]]></item>
+		<item id="1379"><![CDATA[14：00]]></item>
+		<item id="1380"><![CDATA[14：00]]></item>
+		<item id="1381"><![CDATA[14：00]]></item>
+		<item id="1382"><![CDATA[14：00]]></item>
+		<item id="1472"><![CDATA[不重置]]></item>
+		<item id="1473"><![CDATA[不重置]]></item>
+		<item id="1474"><![CDATA[不重置]]></item>
+		<item id="1475"><![CDATA[不重置]]></item>
+		<item id="1476"><![CDATA[不重置]]></item>
+		<item id="1477"><![CDATA[14：00]]></item>
+		<item id="1478"><![CDATA[14：00]]></item>
+		<item id="1479"><![CDATA[14：00]]></item>
+		<item id="1480"><![CDATA[14：00]]></item>
+		<item id="1481"><![CDATA[14：00]]></item>
+		<item id="1513"><![CDATA[14：00]]></item>
+		<item id="1514"><![CDATA[14：00]]></item>   
+		<item id="1515"><![CDATA[14：00]]></item>
+		<item id="1516"><![CDATA[14：00]]></item>
+		<item id="1719"><![CDATA[14：00]]></item>
+		<item id="2524"><![CDATA[14：00]]></item>
+		<item id="2533"><![CDATA[14：00]]></item>
+		<item id="2532"><![CDATA[14：00]]></item>
+		<item id="2519"><![CDATA[14：00]]></item>
+		<item id="2518"><![CDATA[14：00]]></item>
+		<item id="2517"><![CDATA[14：00]]></item>
+		<item id="1720"><![CDATA[14：00]]></item>
+		<item id="2503"><![CDATA[14：00]]></item>
+		<item id="2390"><![CDATA[14：00]]></item>
+		<item id="2451"><![CDATA[14：00]]></item>
+		<item id="2546"><![CDATA[不重置]]></item>
+		<item id="2547"><![CDATA[不重置]]></item>
+		<item id="2617"><![CDATA[14：00]]></item>
+		<item id="1171"><![CDATA[不重置]]></item>
+		<item id="4795"><![CDATA[14：00]]></item>
+		<item id="4796"><![CDATA[14：00]]></item>
+		<item id="4797"><![CDATA[14：00]]></item>
+		<item id="4798"><![CDATA[14：00]]></item>
+		<item id="4799"><![CDATA[14：00]]></item>
+		<item id="4800"><![CDATA[14：00]]></item>
+		<item id="4801"><![CDATA[14：00]]></item>
+	</treasureHouse>
+	
+	<malls>
+		<item id="0"><![CDATA[买装备记得去超值礼包专区，里面打包装备更便宜哦！]]></item>
+		<item id="1"><![CDATA[金币商城道具八折出售]]></item>
+		<item id="2"><![CDATA[购买通宝商城物品免费获赠金币，购买超值礼包金币更多哦！]]></item>
+	</malls>
+</tips>

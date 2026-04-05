@@ -1,0 +1,79 @@
+<!--src="PANEL_TaskBookPanel,0"表明打开任务面板的第一页，即主线任务-->
+	
+<root>
+	<node lv="5" npcID="10001" roleType="1|2|3|4" msg="勇敢的小侠士，虽经过诸多磨难，但你的努力已经成功激活了伏魔录！现在就点击右上方的伏魔录，接受新的挑战吧。再者，左护法瑶瑶也正在武圣大殿等着你哦。"/>
+	<node lv="10" npcID="10025" roleType="0" msg="恭喜小侠士升到10级啦！每周五18:00和19:00，可以去一气学院兰娅处参加智力大比拼，获得丰厚经验，还有机会获得仙兽菊石；可以去功夫城北区参加新手武斗，享受pk的乐趣。"/>
+	<node lv="25" npcID="10066" roleType="0" msg="恭喜小侠士升到25级啦，你即将接触智能副本，遇到更加强大的黑暗军团，加油！愿勇气与你同在。"/>
+	<node lv="30" npcID="10005" roleType="0" msg="恭喜小侠士升到30级啦！可以去找右奇进行高级试炼，10重难度等你挑战！到达30级每天可以获得一次免费挖宝机会，快去功夫城西区找乌孙了解详情吧！"/>
+	<node lv="35" npcID="10001" roleType="0" msg="勇敢的小侠士，相信你肯定希望得到更好的装备！完成真假武圣，通关伏魔塔，每周排行前十将获得橙装奖励！快打开伏魔录，去挑战吧。"/>
+	<node lv="40" npcID="10072" roleType="0" msg="喜爱战斗的小侠士，勇气武斗场为你开放了哦。这里有更厉害的对手，更高的荣誉，当然还有更丰厚的奖励。快去功夫城北区找勇气武斗场管理员——白徵报名吧。"/>
+	<node lv="45" npcID="10401" roleType="0" msg="孤身战斗的小侠士，想要和好兄弟并肩作战吗？精英武斗场开启了哦。这里进行多人对多人的战斗，每次获得精英积分将被记录。快去功夫城北区找精英武斗场管理员——剑叔报名吧。"/>
+	<node lv="50" npcID="10001" roleType="0" msg="想要体验更厉害的boss吗？想要获得虚空套橙装吗？到达50级，虚空关卡为你开放。快打开伏魔录看看吧！"/>
+	<!--<node lv="60" npcID="10430" roleType="0" msg="转眼小侠士都60级啦，更激情的黑暗武斗场为你们开放，这里有1v1和2v2的战斗，击败对手可获得丰厚功夫豆，还能拾取对方掉落道具！快去先锋哨岗找黑暗哨兵，进入黑暗武斗场吧！"/>-->	
+	
+<!--	<alert lv="5" roleType="0" msg="领取5级传世礼包" transName="立即领取" src="ITEM_1700009"/>
+	<alert lv="5" roleType="0" msg="新的主线任务开启了" transName="查看任务" src="PANEL_TaskBookPanel,0"/>
+	
+	<alert lv="10" roleType="0" msg="领取10级传世礼包" transName="立即领取" src="ITEM_1700010"/>
+	<alert lv="10" roleType="0" msg="新的主线任务开启了" transName="查看任务" src="PANEL_TaskBookPanel,0"/>
+	<alert lv="10" roleType="0" msg="可以自己制作药品啦" transName="现在就去" src="PANEL_ExtraCareerPanel"/>
+
+	<alert lv="15" roleType="0" msg="领取15级传世礼包" transName="立即领取" src="ITEM_1700011"/>
+	<alert lv="15" roleType="0" msg="新的主线任务开启了" transName="查看任务" src="PANEL_TaskBookPanel,0"/>
+
+	<alert lv="20" roleType="0" msg="领取20级传世礼包" transName="立即领取" src="ITEM_1700012"/>
+	<alert lv="20" roleType="0" msg="新的主线任务开启了" transName="查看任务" src="PANEL_TaskBookPanel,0"/>
+	<alert lv="20" roleType="0" msg="可以开启装备锻造功能" transName="立即开启" src="PANEL_EquipCastingPanel,0"/>
+	<alert lv="20" roleType="0" msg="可以开启神兽护法功能" transName="立即开启" src="PANEL_GodSummonMatrixPanel"/>
+
+	<alert lv="25" roleType="0" msg="领取25级传世礼包" transName="立即领取" src="ITEM_1700013"/>
+	<alert lv="25" roleType="0" msg="新的主线任务开启了" transName="查看任务" src="PANEL_TaskBookPanel,0"/>
+
+	<alert lv="30" roleType="0" msg="领取30级传世礼包" transName="立即领取" src="ITEM_1700014"/>
+	<alert lv="30" roleType="0" msg="新的主线任务开启了" transName="查看任务" src="PANEL_TaskBookPanel,0"/>
+
+	<alert lv="35" roleType="0" msg="领取35级传世礼包" transName="立即领取" src="ITEM_1700015"/>
+	<alert lv="35" roleType="0" msg="新的主线任务开启了" transName="查看任务" src="PANEL_TaskBookPanel,0"/>
+	<alert lv="35" roleType="0" msg="押镖开启，赚取大量功夫豆" transName="现在就去" src="NPC_10024"/>
+
+	<alert lv="40" roleType="0" msg="领取40级传世礼包" transName="立即领取" src="ITEM_1700016"/>
+	<alert lv="40" roleType="0" msg="新的主线任务开启了" transName="查看任务" src="PANEL_TaskBookPanel,0"/>
+	<alert lv="40" roleType="0" msg="仙兽升阶开启了" transName="现在就去" src="PANEL_KawaiiPetPanel"/>
+	<alert lv="40" roleType="0" msg="可以进入万博会买卖物品了" transName="现在就去" src="12,1520,500"/>
+	
+	<alert lv="45" roleType="0" msg="新的主线任务开启了" transName="查看任务" src="PANEL_TaskBookPanel,0"/>
+	<alert lv="45" roleType="0" msg="可接取进阶任务" transName="查看任务" src="NPC_10004"/>
+-->	
+	<alert lv="50" roleType="0" msg="新的主线任务开启了" transName="查看任务" src="PANEL_TaskBookPanel,0"/>
+	<alert lv="50" roleType="0" msg="可开启新副职，自己做首饰" transName="现在就去" src="PANEL_JewelryComposePanel"/>
+	
+	<alert lv="60" roleType="0" msg="接取变身任务成为仙灵侠士" transName="查看任务" src="NPC_10001"/>
+	<alert lv="60" roleType="0" msg="坐骑功能开放" transName="现在就去" src="PANEL_NewSummonInfoPanel"/>
+	
+	<alert lv="75" roleType="0" msg="完成三转任务成为三阶侠士" transName="查看任务" src="NPC_10004"/>
+	
+	
+	<!--升级预热-->
+<!--	<alert lv="9" roleType="0" msg="10级开启制药，自己制作药品哦。"/>
+-->	
+	
+	<alert lv="19" roleType="0" msg="20级开启锻造，打造极品装备。"/>
+	<alert lv="19" roleType="0" msg="20级开启神兽护法，提升战斗力。"/>
+	
+	<alert lv="29" roleType="0" msg="30级高级试炼之路，挑战10重难度。"/>
+	
+	<alert lv="34" roleType="0" msg="35级即可押镖，获得大量功夫豆。"/>
+	<alert lv="34" roleType="0" msg="35级开启挑战伏魔塔。"/>
+	
+	<alert lv="39" roleType="0" msg="40级可以去万博会，买卖物品。"/>
+	<alert lv="39" roleType="0" msg="40级给仙兽升阶，获得更高阶仙兽。"/>
+	
+	<alert lv="44" roleType="0" msg="45级接取进阶任务，成为二阶侠士！"/>
+	
+	<alert lv="49" roleType="0" msg="50级即可给装备魔化，提升自身实力。"/>
+	<alert lv="49" roleType="0" msg="50级可以挑战关卡——虚空炼狱。"/>
+	
+	
+	<alert lv="59" roleType="0" msg="60级可以接取变身任务。"/>
+	<alert lv="59" roleType="0" msg="60级可以乘骑坐骑哦！"/>
+</root>

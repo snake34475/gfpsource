@@ -1,0 +1,28 @@
+<!-- 小屋商店配置表 -->
+<stores>
+	<!-- 种子 -->
+	<store id="0">
+		<item id="1800005"/>
+		<item id="1800009"/>
+		<item id="1800014"/>
+		<item id="1800018"/>
+		<item id="1800022"/>
+		<item id="1800010"/>
+		<item id="1800015"/>
+		<item id="1800019"/>
+		<item id="1800023"/>
+		<item id="1800024"/>
+		<item id="1800004"/>
+	</store>
+	<!-- 肥料 -->
+	<store id="1">
+		<item id="1900001"/>
+		<item id="1900002"/>
+		<item id="1900003"/>
+		<item id="1900004"/>
+	</store>
+	<!-- 道具 -->
+	<store id="2">
+		<!-- <item id="2000001"/> -->
+	</store>
+</stores>

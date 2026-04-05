@@ -1,0 +1,24 @@
+package com.gfp.app.mapProcess
+{
+   import com.gfp.core.map.BaseMapProcess;
+   
+   public class MapProcess_1043 extends BaseMapProcess
+   {
+      
+      public function MapProcess_1043()
+      {
+         super();
+      }
+      
+      override protected function init() : void
+      {
+         super.init();
+      }
+      
+      override public function destroy() : void
+      {
+         super.destroy();
+      }
+   }
+}
+

@@ -1,0 +1,171 @@
+<!--
+	活动面板配置，使用配置取代死代码
+	type:节点的类型，0表示传送，1表示打开模块,2表示打开url链接
+	x,y设置绝对坐标
+	isAlign:是否参与屏幕最右边的排序
+	right:表示距离右界面的距离
+	bottom:表示距离下界面的距离
+	width:表示icon的宽度
+	uiClass表示在ui库中的ui链接地址
+	params表示传送或者打开模块的参数
+	minLevel1转生前显示的最小等级
+	maxLevel1转生前显示的最大等级
+	minLevel2转生后显示的最小等级
+	maxLevel2转生后显示的最大等级
+	startTime="2016-1-1-14-30"开始时间，精确到分
+	endTime="2016-1-1-14-30"结束时间，精确到分
+	hasSystemEffect='1' 添加系统默认的特效
+	以上四个都是<= =>这种要成对出现，有maxLevel1必须有minLevel1
+	custom表示自定义数据
+	
+	pos = '0'  右边  ‘1’ 右上角  3上面靠左边  
+	
+	customClass表示继承自BaseActivitySprite的类名，位置需要在com.gfp.app.ui.activity下
+	
+-->
+<activity>
+<!-- 上面左边 pos3 -->
+	<!-- <node id="1" priority="1"  name="天降好礼" type="1" isAlign="1" pos="3"   uiClass="ToolBar_TianJiangHaoLiBtn" customClass="TianJiangHaoLiBtn"  right="270" bottom="200" height="52" width="52" params=""/> -->
+	<node id="1" priority="1"  name="新手签到" unlockTaskID="519" type="0" isAlign="1" pos="3" hasSystemEffect='1'    uiClass="ToolBar_RookieGift" customClass="RookieGiftButton" params="PANEL_GiftForNewPlayerPanel"  width="58"/>
+	<node id="2" priority="2"  name="侠士召集令" unlockTaskID="523" type="1" isAlign="1" pos="3" uiClass="ToolBar_XiaShiZhaoJi" customClass="ZhaoJiButton"  params="CallOfPlayersSummonPanel"  right="270" bottom="200" height="52" width="64"/>
+	<!-- <node id="1" priority="2" name="送最强仙兽" type="0" isAlign="1" pos="3" minLevel1="0" maxLevel1="150" hasSystemEffect='1' uiClass="ToolBar_LiuDaoForNewPlayer" customClass="LiuDaoForNewPlayerButton" params="PANEL_LiuDaoForNewPlayerPanel"  width="65"/> -->
+	<!--<node id="3" priority="3"  name="新手成长" type="0" isAlign="1" pos="3"    uiClass="ToolBar_NewPlayerGrowButton" customClass="NewPlayerGrowButton" params="PANEL_NewUserGrowAwardPanel"  width="52"/>-->
+	<!--<node id="4" priority="4"  name="新手任务" type="0" isAlign="0" pos="3" left='260' top='90'  uiClass="ToolBar_RookieTask" customClass="RookieTaskBtn" params=""  width="123"/>-->
+	
+<!-- 右边 pos0 -->
+	<node id="5" priority="5"  name="精彩活动" type="1" isAlign="1" pos="0" minLevel1="79" maxLevel1="150"    unlockTaskID="523"  uiClass="ToolBar_MidAutumnFestivalAllInOne" customClass="JingCaiBtn"  height="52" width="52" params="MidAutumnFestivalAllInOnePanel"/>
+	<node id="6" priority="6"  name="成仙志" type="1" isAlign="1" pos="0" minLevel1="60" maxLevel1="150"    oneshot="1" unlockTaskID="523"  uiClass="ToolBar_ChengXianZhi1" customClass="ChengXianButton"  height="52" width="52" params="SecondTurnbackPanel"/>
+<!-- 右上角 pos1 -->
+	<node id="7" priority="7"  name="伏魔录" type="0" isAlign="1" pos="1" minLevel1="150" maxLevel1="150" unlockTaskID="521" uiClass="ToolBar_FuMoLuButton" customClass="FuMoLuButton" params="PANEL_BossRoadMapPanel"  width="52">
+		<childNode id="8" priority="8"  name="扫荡" type="0" isAlign="1" pos="1" minLevel1="150" maxLevel1="150" uiClass="ToolBar_SaoDang" params="PANEL_AdvancedAutoLootPanel"  width="52"/>
+	</node>
+	<node id="9" priority="9"  name="我要pk" type="1" isAlign="1" pos="1"  minLevel1="150" maxLevel1="150" uiClass="ToolBar_PkButton" params="GfPkEnterPanel" width="52">
+	    <childNode id="23" priority="23" name="无名之城" type="1" isAlign="1" pos="1" minLevel1="150" maxLevel1="150"     uiClass="ToolBar_WuMingGetBtn" params="TeamFight3v3CityPanel" show="0" width="52"/>
+	</node>
+	<!-- <childNode id="23" priority="23" name="无名之城" type="1" isAlign="1" pos="1" minLevel1="150" maxLevel1="150"     uiClass="ToolBar_WuMingGetBtn" params="TeamFight3v3CityPanel" show="0" width="52"/> -->
+	<!-- <childNode id="26" priority="26"  name="风之无尽" type="1"  minLevel1="150" maxLevel1="150"  isAlign="1"    pos="1" uiClass="ToolBar_endlessWind"  params="EndlessWindLightElfPanel" width="52"/> -->
+	<!-- <childNode id="25" priority="25"  name="神盾烈刺" type="1"  minLevel1="150" maxLevel1="150"  isAlign="1"    pos="1" uiClass="ToolBar_ShengDunLieCi"  params="ShenDunLieCiPanel" width="52"/> -->
+	<node id="10" priority="10"  name="我要装备" type="1" isAlign="1" pos="1"  minLevel1="150" maxLevel1="150"   uiClass="ToolBar_EquipButton" params="Equip120Panel"  width="52">
+	</node>
+	<!-- <childNode id="21" priority="21"  name="元素金装" type="1"  minLevel1="60" maxLevel1="150"  isAlign="1" pos="1"   uiClass="ToolBar_GoldEquip" params="GoldEquipmentActivityPanel" width="52"/> -->
+	<node id="11" priority="11"  name="任务簿" type="0" isAlign="1" pos="1"  minLevel1="150" maxLevel1="150"   uiClass="ToolBar_TaskButton" customClass="TaskButton" params="PANEL_TaskBookPanel"  width="52"/>
+  	<node id="19" priority="19"  name="在线奖励" type="1"  isAlign="1" minLevel1="60" maxLevel1="150" pos="1"   hasSystemEffect='1' unlockTaskID="519"  uiClass="ToolBar_ShitBtn" customClass="OnlineGetTbButton" params="EveryDayOnlinePanel" width="59">
+		<childNode id="22" priority="22"  name="回归七日礼" type="1"  minLevel1="60" maxLevel1="150"  isAlign="1" pos="1"   uiClass="ToolBar_HuiGuiHaoli" customClass="ReturnSevenDayGiftBtn" params="ReturnSevenDayGiftPanel" width="52"/>
+	</node>
+	<!-- <childNode id="20" priority="20"  name="签到" type="1"  isAlign="1" minLevel1="60" maxLevel1="150" pos="1"   unlockTaskID="519"  uiClass="Toolbar_Sign" customClass="" params="NewYearLoginSignPanel" width="52"/> -->
+	<!-- <childNode id="24" priority="24"  name="神兵争夺战" type="1" isAlign="1" minLevel1="150" maxLevel1="150"  pos="1"  uiClass="ToolBar_ShenBingPkBtn" params="ShenBingPvpPanel" show="0" width="50"/> -->
+	<!-- <childNode id="23" priority="23" name="职业联赛" type="1" isAlign="1" pos="1" minLevel1="150" maxLevel1="150"     uiClass="ToolBar_ZhiYeGetBtn" params="CharacterLeaguePanel" show="0" width="52"/> -->  
+	<!-- <childNode id="24" priority="24"  name="明星仙兽" type="1" isAlign="1" minLevel1="150" maxLevel1="150"  pos="1"  uiClass="ToolBar_MingXingGetBtn" params="JoinNbSummonRacePanel" show="0" width="52"/> -->
+	<!-- <node id="23" priority="23" name="无名之城" type="1" isAlign="1" pos="1" minLevel1="150" maxLevel1="150"     uiClass="ToolBar_WuMingGetBtn" params="TeamFight3v3CityPanel" show="0" width="52"/> -->
+	<!--<node id="23" priority="23"  name="材料pk" type="1" isAlign="1" pos="1" minLevel1="150" maxLevel1="150"  uiClass="ToolBar_MaterialPKAwardBtn" params="MaterialRankAwardPanel" show="0" width="55"/>-->
+	<node id="20" priority="20"  name="强者许愿树" type="1"  isAlign="1" minLevel1="60" maxLevel1="150"  pos="1"   uiClass="ToolBar_WishTree" customClass="WishGiftButton" width="62"/>
+	<node id="21" priority="21"  name="五阶白玉狐" type="1"  minLevel1="60" maxLevel1="150" isAlign="1" pos="1"    uiClass="ToolBar_FiveKingBtn" customClass="FiveKingBtn"   height="52" width="65" params="BaiYuHuWuJieMainPanel"/>
+	<node id="22" priority="22"  name="众神传说" type="1"  isAlign="1" minLevel1="150" maxLevel1="150" pos="1" uiClass="ToolBar_AllGod" params="AllGodPanel" width="53">
+	    <childNode id="14" priority="14"  name="艾尔6杰" type="1"  minLevel1="150" maxLevel1="150"  isAlign="1"    pos="1" uiClass="ToolBar_Aier" params="SixSaintInAerPanel" width="53"/>
+	</node>
+	<node id="23" priority="23"  name="连签赢大礼" type="1"  minLevel1="60" maxLevel1="150"  isAlign="1" pos="1"   hasSystemEffect='1' uiClass="ToolBar_weekSign" customClass = "WeekSignButton" params="OnlineGiftCarnivalPanel" width="52"/>
+	<!-- <node id="24" priority="24"  name="赢三圣 " type="1" isAlign="1" minLevel1="60" maxLevel1="150"  pos="1" uiClass="ToolBar_sansheng" oneshot="1" customClass = "SanShengButton" params="RollThreeSaintPanel" width="54"/> -->
+	<!-- <node id="29" priority="29"  name="六道战神" type="1"  isAlign="1" minLevel1="150" maxLevel1="150"    hasSystemEffect='1' unlockTaskID="510"  pos="1" uiClass="ToolBar_LiuDaoZhanShen" customClass="LiuDaoZhanShenButton" params="LiuDaoZhanShenPanel" width="53"/> -->
+	<!-- <childNode id="15" priority="15"  name="许愿神树" type="1"  minLevel1="150" maxLevel1="150"  isAlign="1"    pos="1" uiClass="ToolBar_WiTree" params="WishGodTreePanel" width="53"/> -->
+	
+	
+<!-- 右上角第二排 pos2 -->
+	<node id="30" priority="29"  name="钱多多" type="1"  minLevel1="150" maxLevel1="150" isAlign="1" pos="2" uiClass="ToolBar_QianDuoDuo" oneshot="2" params="NewMoneyMoreAndMorePanel" show="0" width="48">
+		<childNode id="32" priority="32"  name="成长储蓄罐" type="1" isAlign="1"    unlockTaskID="521"  minLevel1="60" maxLevel1="150" minLevel2="60" maxLevel2="150"  pos="2" uiClass="ToolBar_SavingPot" customClass="SavingPotButton"  params="SavingPot1601Panel" width="52"/>
+	</node>
+	<!-- <childNode id="31" priority="31"  name="新手特惠" type="1" isAlign="1"    unlockTaskID="521"  minLevel1="60" maxLevel1="150" minLevel2="60" maxLevel2="150"  pos="2" uiClass="UI_NewsTeiHuiButton" customClass="BaseScrollTextButton"  params="DiscountForNewPlayerPanel" width="52"/> -->
+	<!-- <childNode id="33" priority="32"  name="快速转生" type="1" isAlign="1" pos="2"  minLevel1="60" maxLevel1="100"   unlockTaskID="504"  uiClass="UI_QuickTurnButton" customClass="BaseScrollTextButton"  params="TurnBackTbPanel" width="52"/> -->
+	<!-- <node id="34" priority="42"  name="成长储蓄罐 " type="1" isAlign="1"   minLevel1="60" maxLevel1="150"  unlockTaskID="521" pos="2" uiClass="ToolBar_SavingPot" customClass="SavingPotButton"  oneshot="1" params="SavingPot1601Panel" width="56"/> -->
+	<!-- <node id="45" priority="42"  name="一键成仙 " type="1" isAlign="1" minLevel1="150" maxLevel1="150"  pos="2" uiClass="ToolBar_YiJianChengXian" oneshot="1" customClass="TurnGodByClickButton" params="TurnGodByClickPanel" width="54"/> -->
+	<!-- <node id="46" priority="44"  name="返利特卖 " type="1" isAlign="1" minLevel1="150" maxLevel1="150"  pos="2" uiClass="ToolBar_RewardTB" oneshot="1" params="RongLianMatierialRewardPanel" width="55"/> -->
+	<!-- <node id="47" priority="45"  name="赢生命真神 " type="1" isAlign="1" minLevel1="60" maxLevel1="150" pos="2" hasSystemEffect='1' uiClass="ToolBar_XiaoXi" oneshot="1" params="StrongestGuardPanel" width="55"/> -->
+	<!-- <node id="47" priority="45"  name="能量秘宝 " type="1" isAlign="1" minLevel1="60" maxLevel1="150" pos="2" hasSystemEffect='1' uiClass="ToolBar_PowerDiamond" oneshot="1" params="RollEnergyDiamondPanel" width="55"/> -->
+	<!-- <node id="46" priority="44"  name="vip送众神 " type="1" isAlign="1" minLevel1="60" maxLevel1="150" pos="2" hasSystemEffect='1' uiClass="ToolBar_vip" oneshot="1" params="FreeChengForVipPanel" width="55"/> -->
+	<node id="48" priority="46"  name="神界秘宝 " type="1" isAlign="1" minLevel1="150" maxLevel1="150"  pos="2" uiClass="ToolBar_MagicPeach" oneshot="1" params="MagicPeachPanel" width="55">
+	    <childNode id="40" priority="40"  name="炼仙炉" type="1"  isAlign="1"   minLevel1="150" maxLevel1="150"   pos="1" uiClass="ToolBar_LianXianLuBtn" customClass="" params="LianXianLuPanel" width="52"/>
+		<childNode id="41" priority="41"  name="神通特卖" type="1" isAlign="1" pos="2" hasSystemEffect='1'  minLevel1="150" maxLevel1="150"   oneshot="1" uiClass="ToolBar_HalfPriceSummon" customClass="" params="NewSTSummonOnSalePanel" show="0" width="53"/>
+	</node>
+	<!-- <childNode id="42" priority="42" name="抢红包" type="1" isAlign="1" pos="1" minLevel1="150" maxLevel1="150"     uiClass="ToolBar_HongBao" params="DeliverMoneyMainPanel" show="0" width="52"/> -->
+	<!-- <node id="42" priority="43"  name="功夫金卡 " type="1" isAlign="1"   minLevel1="60" maxLevel1="150"  unlockTaskID="521" pos="2" uiClass="ToolBar_GoldCard"  oneshot="1" params="GoldCardPanel" width="54"/> -->
+	<!-- <node id="47" priority="45"  name="赢致命真神 " type="1" isAlign="1" minLevel1="60" maxLevel1="150"  pos="2" uiClass="ToolBar_StrongGuard" oneshot="1" params="StrongestGuardPanel" width="54"/> -->
+	<!-- <node id="48" priority="46"  name="VIP钜惠 " type="1" isAlign="1" minLevel1="60" maxLevel1="150"  pos="2" uiClass="ToolBar_FreeSnake" oneshot="1" params="FreeChengForVipPanel" width="54"/> -->	
+	<!-- <node id="48" priority="46"  name="消费返利 " type="1" isAlign="1" minLevel1="60" maxLevel1="150" pos="2" hasSystemEffect='1' uiClass="ToolBar_FanLi" oneshot="1" params="CostTongBaoYingZhenShenPanel" width="55"> -->
+	<!-- <node id="48" priority="46"  name="绝版时装 " type="1" isAlign="1" minLevel1="60" maxLevel1="150" pos="2" hasSystemEffect='1' uiClass="ToolBar_ShiZhuang" oneshot="1" params="RareFashionsBackPanel" width="55"> -->
+	<!-- <node id="48" priority="46"  name="兑换返利 " type="1" isAlign="1" minLevel1="60" maxLevel1="150"  pos="2" hasSystemEffect='1' uiClass="ToolBar_DuiHuan" oneshot="1" params="SixYearAnniversaryRollPanel" width="54"/> -->
+	<!-- <node id="48" priority="46"  name="绝版坐骑 " type="1" isAlign="1" minLevel1="60" maxLevel1="150"  pos="2" hasSystemEffect='1' uiClass="ToolBar_ZuoJi" oneshot="1" params="RareRideBackPanel" width="54"/> -->
+	<!-- <node id="49" priority="47"  name="消费返利  " type="1" isAlign="1" minLevel1="60" maxLevel1="150" pos="2" hasSystemEffect='1' uiClass="ToolBar_DuiHuan" oneshot="1" params="SixYearAnniversaryRollPanel" width="55"> -->
+	<!-- <node id="48" priority="46"  name="神兵抽抽 " type="1" isAlign="1" minLevel1="60" maxLevel1="150"  pos="2" uiClass="ToolBar_shenbingRoll" oneshot="1" params="ShenBingRollPanel" width="54"/> -->
+	<!-- <node id="49" priority="47"  name="双重好礼 " type="1" isAlign="1" minLevel1="60" maxLevel1="150"  pos="2" hasSystemEffect='1' uiClass="ToolBar_DoubleGift" oneshot="1" params="ChaoLinDoubleGiftPanel" width="54"> -->
+	<node id="49" priority="48"  name="快捷入口 " type="1" isAlign="1" minLevel1="60" maxLevel1="150"  pos="2" hasSystemEffect='1' uiClass="ToolBar_FastEnter" oneshot="1" customClass = "FastEnterButton" params="DownloadExpressIconPanel" width="54">
+         <childNode id="42" priority="43"  name="召唤伙伴 " type="1" isAlign="1" minLevel1="150" maxLevel1="150" pos="2" hasSystemEffect='1' uiClass="ToolBar_partner" oneshot="1" params="CallUpPartnerForGiftPanel" width="55"/>	
+	</node>
+	<!-- <node id="51" priority="49"  name="最强守护 " type="1" isAlign="1" minLevel1="60" maxLevel1="150"  pos="2" hasSystemEffect='1' uiClass="ToolBar_guardTwo" oneshot="1" params="StrongestGuardPanel" width="54"/> -->
+	<!-- <node id="51" priority="49"  name="月光祝福 " type="1" isAlign="1" minLevel1="60" maxLevel1="150"  pos="2" hasSystemEffect='1' uiClass="ToolBar_YueGuang" oneshot="1" customClass = "YueGuangZhuFuButton" params="WelcomeMidAutumnPanel" width="54"/> -->
+	<!-- <node id="53" priority="51"  name="消费返利 " type="1" isAlign="1" minLevel1="60" maxLevel1="150" pos="2" hasSystemEffect='1' uiClass="ToolBar_FanLi" oneshot="1" params="CostTongBaoYingShenJianPanel" width="55"/> -->
+	<node id="50" priority="52"  name="每周限购 " type="1" isAlign="1" minLevel1="60" maxLevel1="150" pos="2" hasSystemEffect='1' uiClass="ToolBar_xiangou" oneshot="1" params="WeekItemPanel" width="55"/>	
+	<node id="51" priority="53"  name="2017年费vip" type="1" isAlign="1" minLevel1="60" maxLevel1="150" oneshot="1" pos="2"  hasSystemEffect='1' uiClass="ToolBar_2017Vip" customClass = "YearPrivilegeButton" params="VIP2017YearPrivilegePanel" width="50">
+		<childNode id="36" priority="36"  name="超灵狂欢" type="1" isAlign="1"  minLevel1="60" maxLevel1="150"  pos="2" uiClass="ToolBar_VIPSummon"  oneshot="1" params="RechargeCarnivalPanel" width="53"/>
+	    <childNode id="37" priority="37"  name="超灵专属" type="1" isAlign="1"    minLevel1="60" maxLevel1="150" pos="2" uiClass="ToolBar_ChaoLingHaoLi"  oneshot="1" params="VipGiftPanel" width="53"/>
+	</node>
+	<!-- <node id="52" priority="54"  name="vip钜惠 " type="1" isAlign="1" minLevel1="60" maxLevel1="150"  pos="2" hasSystemEffect='1' uiClass="ToolBar_DoubleGiftVIP" oneshot="1" params="RongLianMaterial2017Panel" width="54"/> -->
+	<node id="52" priority="54"  name="绝版时装 " type="1" isAlign="1" minLevel1="150" maxLevel1="150" pos="2" hasSystemEffect='1' uiClass="ToolBar_ShiZhuang" customClass = "GuardClothesBtn" oneshot="1" params="RareFashionsBackPanel" width="55"/>
+	<!-- <childNode id="51" priority="35"  name="vip特惠 " type="1" isAlign="1" minLevel1="150" maxLevel1="150" pos="2" hasSystemEffect='1' uiClass="ToolBar_vipCheng" oneshot="1" params="FreeChengForVipPanel" width="55"/> -->
+	<node id="53" priority="55"  name="神宠折扣 " type="1" isAlign="1" minLevel1="60" maxLevel1="150"  pos="2" hasSystemEffect='1' uiClass="ToolBar_DisPet" customClass = "GuardClothesBtn" oneshot="1" params="DiscountPetPanel" width="54"/>
+	<!-- <node id="55" priority="57"  name="命运之轮 " type="1" isAlign="1" minLevel1="60" maxLevel1="150"  pos="2" hasSystemEffect='1' uiClass="ToolBar_wheel" oneshot="1" params="FateWheelOfLifeGodPanel" width="54"/> -->
+	<!-- <node id="54" priority="56"  name="幸运之轮 " type="1" isAlign="1" minLevel1="60" maxLevel1="150"  pos="2" hasSystemEffect='1' uiClass="ToolBar_wheelFortune" oneshot="1" params="FateWheelBigGiftPanel" width="54"/> -->
+	<node id="55" priority="57"  name="vip特惠 " type="1" isAlign="1" minLevel1="60" maxLevel1="150"  pos="2" hasSystemEffect='1' uiClass="ToolBar_vipRide" oneshot="1" params="FreeChengForVipPanel" width="54"/>
+	<!-- <node id="55" priority="57"  name="双重好礼 " type="1" isAlign="1" minLevel1="60" maxLevel1="150"  pos="2" hasSystemEffect='1' uiClass="ToolBar_DoubleGift" oneshot="1" params="ChaoLinDoubleGiftPanel" width="54"/> -->
+	<node id="56" priority="58"  name="最强守护 " type="1" isAlign="1" minLevel1="60" maxLevel1="150"  pos="2" uiClass="ToolBar_guard" customClass = "StrongestGuardButton" oneshot="1" params="StrongestGuardPanel" width="54"/>
+	<node id="57" priority="59"  name="六一专属 " type="1" isAlign="1" minLevel1="60" maxLevel1="150"  pos="2" uiClass="ToolBar_Liuyi" customClass = "MXRewardButton" oneshot="1" params="ExclusiveForChildrensDay" width="54"/>
+	<!-- <node id="57" priority="59"  name="赢守护神 " type="1" isAlign="1" minLevel1="60" maxLevel1="150"  pos="2" hasSystemEffect='1' uiClass="ToolBar_rollGod" customClass = "RollGodButton" oneshot="1" params="OnlineForGodPanel" width="54"/> -->
+	<!-- <node id="57" priority="59"  name="勤劳致富" type="1" isAlign="1" minLevel1="60" maxLevel1="150"  pos="2" hasSystemEffect='1' uiClass="ToolBar_swapGod" oneshot="1" params="LabordayCarnivalPanel" width="54"/> -->
+	<!-- <node id="58" priority="60"  name="祭奠英魂" type="1" isAlign="1" minLevel1="60" maxLevel1="150"  pos="2" hasSystemEffect='1' uiClass="ToolBar_RollSoul" oneshot="1" params="RollSoulPanel" width="54"/> -->
+	<!-- <node id="56" priority="58"  name="第二弹 " type="1" isAlign="1" minLevel1="60" maxLevel1="150"  pos="2" hasSystemEffect='1' uiClass="ToolBar_Second" customClass = "MXRewardButton" oneshot="1" params="GuoQingTeQuanPanel" width="55"/> -->
+	<!-- <node id="57" priority="59"  name="第一弹" type="1" isAlign="1" minLevel1="60" maxLevel1="150"  pos="2" hasSystemEffect='1' uiClass="ToolBar_First" customClass = "MXRewardButton" oneshot="1" params="RongLianMaterial2017Panel" width="58"/> -->
+	<!-- <node id="51" priority="53"  name="神宠限时 " type="1" isAlign="1" minLevel1="150" maxLevel1="150" pos="2" hasSystemEffect='1' uiClass="ToolBar_ShenChongGou" oneshot="1" params="NewYearSummonTeHuiPanel" width="55"/> -->
+	<!-- <node id="51" priority="53"  name="双重好礼 " type="1" isAlign="1" minLevel1="60" maxLevel1="150"  pos="2" hasSystemEffect='1' uiClass="ToolBar_DoubleGift" oneshot="1" params="ChaoLinDoubleGiftPanel" width="54"/> -->
+	<!-- <node id="52" priority="54"  name="最强守护 " type="1" isAlign="1" minLevel1="60" maxLevel1="150"  pos="2" hasSystemEffect='1' uiClass="ToolBar_guardTwo" oneshot="1" params="StrongestGuardPanel" width="54"/> -->
+	<!-- <node id="57" priority="55"  name="三阶英魂" type="1" isAlign="1" minLevel1="60" maxLevel1="150"  pos="2" hasSystemEffect='1' uiClass="ToolBar_YH" oneshot="1" params="CheapHeroSoulPanel" width="54"/> -->
+	<!-- <node id="56" priority="54"  name="vip特惠 " type="1" isAlign="1" minLevel1="150" maxLevel1="150" pos="2" hasSystemEffect='1' uiClass="ToolBar_vipCheng" oneshot="1" params="FreeChengForVipPanel" width="55"/> -->
+	<!-- <node id="57" priority="55"  name="消费返利 " type="1" isAlign="1" minLevel1="60" maxLevel1="150" pos="2" hasSystemEffect='1' uiClass="ToolBar_FanLi" oneshot="1" params="CostTongBaoYingZhenShenPanel" width="55"/> -->
+	<!-- <node id="58" priority="56"  name="神宠半价 " type="1" isAlign="1" minLevel1="60" maxLevel1="150" pos="2" hasSystemEffect='1' uiClass="ToolBar_ShenChong" oneshot="1" params="SummonHalfPricePanel" width="55"/> -->
+	<!-- <node id="57" priority="55"  name="返利特卖 " type="1" isAlign="1" minLevel1="150" maxLevel1="150"  pos="2" uiClass="ToolBar_RewardRLTB" oneshot="1" params="RongLianMatierialRewardPanel" width="55"/> -->
+	<!-- <node id="56" priority="54"  name="永久时装 " type="1" isAlign="1" minLevel1="150" maxLevel1="150" pos="2" hasSystemEffect='1' uiClass="ToolBar_clothes" oneshot="1" params="FashionClothesPanel" width="55"/> -->
+	<!-- <node id="55" priority="53"  name="fiona姐姐发通宝 " type="1" isAlign="1" minLevel1="60" maxLevel1="150" pos="2" hasSystemEffect='1' uiClass="ToolBar_tbtb" oneshot="1" customClass = "QiangTbButton" params="FourYearsTakeTbRankPanel" width="55"/> -->
+	<!-- <node id="53" priority="51"  name="最强守护 " type="1" isAlign="1" minLevel1="60" maxLevel1="150"  pos="2" uiClass="ToolBar_guard" oneshot="1" params="StrongestGuardPanel" width="54"/> -->
+   
+	<!-- 头像下方 -->
+	<node id="80" priority="39" name="我要变强" type="1" pos="4" isAlign="1"  minLevel1="150" maxLevel1="150"   unlockTaskID="521" uiClass="ToolBar_Strong"  params="TurnStrongPanel" width="52">
+		<childNode id="81" priority="40" name="升级" type="1"  isAlign="1" minLevel1="60" maxLevel1="150" pos="4" uiClass="ToolBar_Level" customClass="" params="TurnStrong_levelPanel" width="52"/>
+		<childNode id="82" priority="41" name="仙兽" type="1"  isAlign="1" minLevel1="60" maxLevel1="150" pos="4" uiClass="ToolBar_Summon" customClass="" params="TurnStrong_summonPanel" width="52"/>
+		<childNode id="83" priority="42" name="装备" type="1"  isAlign="1" minLevel1="60" maxLevel1="150" pos="4" uiClass="ToolBar_Equip" customClass="TurnStrongEquipButton" params="TurnStrong_equipPanel" width="52"/>
+	</node>
+	<node id="81" priority="39" name="升级" type="1" pos="4" isAlign="1"  minLevel1="60" maxLevel1="150" minLevel2="150" maxLevel2="150"   unlockTaskID="521" uiClass="ToolBar_Level2" customClass="" params="TurnStrong_levelPanel" width="52"/>
+	<node id="84" priority="28" name="每日任务" type="1" pos="4" isAlign="1"  hasSystemEffect='1' oneshot="2" minLevel1="150" maxLevel1="150" minLevel2="60" maxLevel2="150"  customClass="DailyTaskButton"  unlockTaskID="521" uiClass="ToolBar_DailyTask"  params="NewDailyTaskPanel" width="52"/>
+	<node id="85" priority="41" name="转生之路" type="1" pos="4" isAlign="1"  minLevel1="60" maxLevel1="150"   unlockTaskID="521" customClass="TurnbackRoadButton" uiClass="ToolBar_TurnbackRoad"  params="ReBornGuidePanel" width="52">
+		<childNode id="21" priority="21"  name="转生礼包" type="1" isAlign="1" minLevel1="60" maxLevel1="150"  pos="1"   uiClass="ToolBar_ZhuanSheng" customClass="ZhuanShenButton"  right="235" bottom="150" height="52" width="52" params=""/>
+	</node>
+
+<!-- 其他位置 -->
+	<node id="60" priority="60"  name="神兵争夺战" type="1" minLevel1="150" maxLevel1="150"  isAlign="0" pos="" right="150" bottom="150" uiClass="ToolBar_ShenBingBtn" customClass="ShenBingPvpButton"  height="52" width="52" params="ShenBingPvpPanel"/>  
+	<!-- <node id="60" priority="60"  name="冠名之战" type="1" minLevel1="150" maxLevel1="150"  isAlign="0" pos="" right="150" bottom="150" uiClass="ToolBar_WuMingBtn" customClass="WuMingButton"  height="52" width="52" params="TeamFight3v3CityPanel"/> -->
+	<!-- <node id="60" priority="60"  name="天下第一" type="1" minLevel1="150" maxLevel1="150"  isAlign="0" pos="" right="150" bottom="150" uiClass="ToolBar_TianXiaBtn" customClass="TianXiaButton"  height="52" width="52" params="NewNo1InTheWorldPanel"/> -->
+	<!-- <node id="60" priority="60"  name="明星仙兽" type="1"  minLevel1="150" maxLevel1="150"  isAlign="1" pos="" right="250" bottom="150"  uiClass="ToolBar_MingXingBtn" customClass="MingXingButton"  params="JoinNbSummonRacePanel" width="52"/> --> 
+	<!-- <node id="60" priority="60"  name="霸王战" type="1" minLevel1="150" maxLevel1="150"  isAlign="0" pos="" right="235" bottom="200" uiClass="ToolBar_BaWangBtn" customClass="BaWangButton"  height="52" width="52" params="BaWangFightPanel"/>-->
+	<!-- <node id="60" priority="60"  name="职业联赛" type="1" minLevel1="150" maxLevel1="150"  isAlign="0" pos="" right="150" bottom="150" uiClass="ToolBar_ZhiYeBtn" customClass="ZhiYeButton"  height="52" width="52" params="CharacterLeaguePanel"/> -->
+	<!-- <node id="60" priority="60" name="无名之城" type="1" minLevel1="150" maxLevel1="150"  isAlign="0" pos=""  right="150" bottom="150"  uiClass="ToolBar_WuMingBtn" customClass="WuMingButton" params="TeamFight3v3CityPanel" width="52"/> -->
+	<!--<node id="60" priority="60"  name="材料pk" type="1" minLevel1="150" maxLevel1="150"  isAlign="0" pos="" right="150" bottom="150" uiClass="ToolBar_MaterialPKBtn" customClass="MaterialPkButton"  height="52" width="52" params="MaterialPkPanel"/> -->
+	<!--<node id="60" priority="60"  name="公平pk" type="1" minLevel1="150" maxLevel1="150"  isAlign="0" pos="" right="150" bottom="150" uiClass="ToolBar_FairlPKBtn" customClass="FairPkButton"  height="52" width="52" params="FairPkPanel"/> -->
+	<!-- <node id="62" priority="62"  name="功夫派时间表" type="1" minLevel1="150" maxLevel1="150"  isAlign="0" pos="" right="240" bottom="290" uiClass="ToolBar_GongFuTimeBtn" customClass="GongFuTimeBtn"  height="52" width="52" params="GongFuTimeTablePanel"/> -->
+	<!-- <node id="63" priority="63"  name="抢仙兽" type="1" minLevel1="150" maxLevel1="150"  isAlign="0" pos="" right="180" bottom="230" uiClass="ToolBar_qiangSummon" customClass="GongQiangSummonBtn"  height="52" width="52" params="FourCelebrationPanel"/> -->
+	<!--<node id="4" priority="1"  name="6倍经验" type="-1" minLevel1="150" maxLevel1="150"  isAlign="0" pos="" right="160" bottom="192" uiClass="ToolBar_MultiFoldExpButton" customClass="MultiFoldExpButton"  height="52" width="52" params=""/> -->
+	<!--<node id="4" priority="1"  name="疯狂夺宝" type="1" minLevel1="150" maxLevel1="150"  isAlign="0" pos="" right="135" bottom="192" uiClass="ToolBar_FKDBButton" customClass="FengKuangDuoBaoButton"  height="52" width="52" params="FengKuangDuoBaoPanel"/> -->
+	<node id="64" priority="64"  name="万博会拍卖" type="1" minLevel1="150" maxLevel1="150"  isAlign="0" pos="" right="145" bottom="290" uiClass="ToolBar_Auction" customClass="TradeAuctionButton"  height="52" width="52" params="TradeAuctionPanel"/>
+	<Announcement><![CDATA[2017年费VIP震撼登场！]]></Announcement>
+    <Announcement><![CDATA[每天晚上19:00-20:00在功夫城广场即可获得众神祝福哦！]]></Announcement>
+    <Announcement><![CDATA[通关转生后副本可赢银票红包，更有机会获得稀有背景卡！]]></Announcement>
+    <Announcement><![CDATA[每在线30分钟，即可领取世界喇叭一个！]]></Announcement>
+	
+	<!-- <Announcement><![CDATA[VIP钜惠月第二弹，大量VIP额外福利等你来领！]]></Announcement> -->
+	<!-- <Announcement><![CDATA[兑换1000通宝即可免费领取生命之神·希，最强生命守护！]]></Announcement> -->
+</activity>

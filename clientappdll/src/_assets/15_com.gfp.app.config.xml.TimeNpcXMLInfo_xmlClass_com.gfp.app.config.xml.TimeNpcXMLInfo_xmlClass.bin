@@ -1,0 +1,87 @@
+<!-- 指定时间显示指定的NPC -->
+<timeNpcs>
+	<!--     npcId="npcID" mapId="地图ID" visible="0:隐藏,1,显示" -->
+	<!-- 可包含多个时间显示 -->
+	<!-- type="0:指定日期的时间短 1:指定时间范围内的每天该时间段 2:指定时间段内的每周几" startTime="年-月-日-时-分" endTime = "年-月-日-时-分" week = "周几 0表示周日 1表示周一 ....中间用|分开"-->
+	<!--
+	<timeNpc id="1001" npcId="10165" mapId="14" visible="1">
+		<time type="0" startTime="2011-12-24-13-00" endTime = "2011-12-24-13-30"/>
+	</timeNpc>
+	<timeNpc id="1002" npcId="10166" mapId="1" visible="1">
+		<time type="0" startTime="2011-12-24-13-30" endTime = "2011-12-24-14-00"/>
+	</timeNpc>
+	<timeNpc id="1003" npcId="10167" mapId="41" visible="1">
+		<time type="0" startTime="2011-12-24-14-00" endTime = "2011-12-24-14-30"/>
+	</timeNpc>
+	<timeNpc id="1004" npcId="10168" mapId="7" visible="1">
+		<time type="0" startTime="2011-12-24-14-30" endTime = "2011-12-24-15-00"/>
+	</timeNpc>
+	<timeNpc id="1005" npcId="10169" mapId="6" visible="1">
+		<time type="0" startTime="2011-12-24-15-00" endTime = "2011-12-24-15-30"/>
+	</timeNpc>
+	<timeNpc id="1006" npcId="10170" mapId="7" visible="1">
+		<time type="0" startTime="2011-12-24-19-00" endTime = "2011-12-24-19-30"/>
+	</timeNpc>
+	<timeNpc id="1007" npcId="10171" mapId="15" visible="1">
+		<time type="0" startTime="2011-12-24-19-30" endTime = "2011-12-24-20-00"/>
+	</timeNpc>
+	<timeNpc id="1008" npcId="10172" mapId="31" visible="1">
+		<time type="0" startTime="2011-12-24-20-00" endTime = "2011-12-24-20-30"/>
+	</timeNpc>
+	<timeNpc id="1009" npcId="10173" mapId="6" visible="1">
+		<time type="0" startTime="2011-12-24-20-30" endTime = "2011-12-24-21-00"/>
+	</timeNpc>
+	<timeNpc id="1010" npcId="10174" mapId="41" visible="1">
+		<time type="0" startTime="2011-12-24-21-00" endTime = "2011-12-24-21-30"/>
+	</timeNpc>
+	<timeNpc id="1011" npcId="10175" mapId="1" visible="1">
+		<time type="0" startTime="2011-12-25-13-00" endTime = "2011-12-25-13-30"/>
+	</timeNpc>
+	<timeNpc id="1012" npcId="10176" mapId="7" visible="1">
+		<time type="0" startTime="2011-12-25-13-30" endTime = "2011-12-25-14-00"/>
+	</timeNpc>
+	<timeNpc id="1013" npcId="10177" mapId="14" visible="1">
+		<time type="0" startTime="2011-12-25-14-00" endTime = "2011-12-25-14-30"/>
+	</timeNpc>
+	<timeNpc id="1014" npcId="10178" mapId="1" visible="1">
+		<time type="0" startTime="2011-12-25-14-30" endTime = "2011-12-25-15-00"/>
+	</timeNpc>
+	<timeNpc id="1015" npcId="10179" mapId="6" visible="1">
+		<time type="0" startTime="2011-12-25-15-00" endTime = "2011-12-25-15-30"/>
+	</timeNpc>
+	<timeNpc id="1016" npcId="10180" mapId="15" visible="1">
+		<time type="0" startTime="2011-12-25-19-00" endTime = "2011-12-25-19-30"/>
+	</timeNpc>
+	<timeNpc id="1017" npcId="10181" mapId="31" visible="1">
+		<time type="0" startTime="2011-12-25-19-30" endTime = "2011-12-25-20-00"/>
+	</timeNpc>
+	<timeNpc id="1018" npcId="10182" mapId="7" visible="1">
+		<time type="0" startTime="2011-12-25-20-00" endTime = "2011-12-25-20-30"/>
+	</timeNpc>
+	<timeNpc id="1019" npcId="10183" mapId="6" visible="1">
+		<time type="0" startTime="2011-12-25-20-30" endTime = "2011-12-25-21-00"/>
+	</timeNpc>
+	<timeNpc id="1020" npcId="10184" mapId="41" visible="1">
+		<time type="0" startTime="2011-12-25-21-00" endTime = "2011-12-25-21-30"/>
+	</timeNpc>
+	<timeNpc id="1021" npcId="10185" mapId="31" visible="1">
+		<time type="0" startTime="2011-12-23-19-00" endTime = "2011-12-23-19-30"/>
+	</timeNpc>
+	<timeNpc id="1022" npcId="10186" mapId="1" visible="1">
+		<time type="0" startTime="2011-12-23-19-30" endTime = "2011-12-23-20-00"/>
+	</timeNpc>
+	<timeNpc id="1023" npcId="10187" mapId="15" visible="1">
+		<time type="0" startTime="2011-12-23-20-00" endTime = "2011-12-23-20-30"/>
+	</timeNpc>
+	<timeNpc id="1024" npcId="10188" mapId="41" visible="1">
+		<time type="0" startTime="2011-12-23-20-30" endTime = "2011-12-23-21-00"/>
+	</timeNpc>
+	<timeNpc id="1025" npcId="10189" mapId="7" visible="1">
+		<time type="0" startTime="2011-12-23-21-00" endTime = "2011-12-23-21-30"/>
+	</timeNpc>
+-->
+	<timeNpc id="1026" npcId="10398" mapId="57" visible="1">
+		<time type="2" startTime="2012-5-1-13-00" endTime = "2099-5-5-15-00" week="6"/>
+		<time type="2" startTime="2012-5-1-19-00" endTime = "2099-5-5-21-00" week="6"/>
+	</timeNpc>
+</timeNpcs>

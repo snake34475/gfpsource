@@ -1,0 +1,12 @@
+{
+  "name": "gfp-test-client",
+  "version": "1.0.0",
+  "description": "GFP Test Client",
+  "main": "test-client.js",
+  "scripts": {
+    "test": "node test-client.js"
+  },
+  "dependencies": {
+    "ws": "^8.16.0"
+  }
+}

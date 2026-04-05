@@ -1,0 +1,456 @@
+<!--
+	NOTICE:此XML主用途是装备A通过一定消耗，转变到装备B，支持对物品A等级范围、部位、装备类型的过滤。
+		   物品转变可以走锻造表。此表暂时不支持非装备物品转变。
+-->
+
+<!--
+	TransInfo
+	ID			唯一标识ID，1000开始累加，1000以下可用特殊用途
+	ItemId		需要更新的装备ItemId，若配置ItemId，则ItemLv、EquipPart、RoleType不起作用,若不配可填0
+	ItemLv		角色等级范围，若ID不存在时则通过客户端发送的装备uid来判定是不是属于ItemLv范围内
+	EquipPart	需要更新的装备部位 1-头 2-项链 3-手套 4-武器 5-戒指 6-衣服 7-腰带 8-裤子 9-鞋子 10-饰品
+				**nb** 其中2-项链，5-戒指，10-饰品部位暂时不允许转变 **
+	RoleType	角色类型 1-猴子 2-兔子 3-熊猫 4-龙人
+	Costs		消耗品，形如Costs="150000 10 160000 20"，150000与160000代表物品ID，10与20代表物品数量，
+				**nb** 目前最多支持5种"物品材料类消耗" **
+
+	OutItem		
+	ItemId		目标装备ID，支持5种可能
+	Cnt			数量
+	Odds		得到新物品的概率，和等于100
+-->
+
+
+<TransInfos>
+	<TransInfo ID="1000" ItemId="0" ItemLv="40 45" EquipPart="1" RoleType="1" Costs="1410063 1">
+		<OutItem ItemId="100881" Cnt="1" Odds="60"/>
+		<OutItem ItemId="100860" Cnt="1" Odds="30"/>
+		<OutItem ItemId="100839" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1001" ItemId="0" ItemLv="40 45" EquipPart="3" RoleType="1" Costs="1410063 1">
+		<OutItem ItemId="100884" Cnt="1" Odds="60"/>
+		<OutItem ItemId="100863" Cnt="1" Odds="30"/>
+		<OutItem ItemId="100842" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1002" ItemId="0" ItemLv="40 45" EquipPart="4" RoleType="1" Costs="1410063 1">
+		<OutItem ItemId="100887" Cnt="1" Odds="60"/>
+		<OutItem ItemId="100866" Cnt="1" Odds="30"/>
+		<OutItem ItemId="100845" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1003" ItemId="0" ItemLv="40 45" EquipPart="6" RoleType="1" Costs="1410063 1">
+		<OutItem ItemId="100882" Cnt="1" Odds="60"/>
+		<OutItem ItemId="100861" Cnt="1" Odds="30"/>
+		<OutItem ItemId="100840" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1004" ItemId="0" ItemLv="40 45" EquipPart="7" RoleType="1" Costs="1410063 1">
+		<OutItem ItemId="100885" Cnt="1" Odds="60"/>
+		<OutItem ItemId="100864" Cnt="1" Odds="30"/>
+		<OutItem ItemId="100843" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1005" ItemId="0" ItemLv="40 45" EquipPart="8" RoleType="1" Costs="1410063 1">
+		<OutItem ItemId="100883" Cnt="1" Odds="60"/>
+		<OutItem ItemId="100862" Cnt="1" Odds="30"/>
+		<OutItem ItemId="100841" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1006" ItemId="0" ItemLv="40 45" EquipPart="9" RoleType="1" Costs="1410063 1">
+		<OutItem ItemId="100886" Cnt="1" Odds="60"/>
+		<OutItem ItemId="100865" Cnt="1" Odds="30"/>
+		<OutItem ItemId="100844" Cnt="1" Odds="10"/>
+	</TransInfo>
+
+	<TransInfo ID="1007" ItemId="0" ItemLv="40 45" EquipPart="1" RoleType="2" Costs="1410063 1">
+		<OutItem ItemId="200881" Cnt="1" Odds="60"/>
+		<OutItem ItemId="200860" Cnt="1" Odds="30"/>
+		<OutItem ItemId="200839" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1008" ItemId="0" ItemLv="40 45" EquipPart="3" RoleType="2" Costs="1410063 1">
+		<OutItem ItemId="200884" Cnt="1" Odds="60"/>
+		<OutItem ItemId="200863" Cnt="1" Odds="30"/>
+		<OutItem ItemId="200842" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1009" ItemId="0" ItemLv="40 45" EquipPart="4" RoleType="2" Costs="1410063 1">
+		<OutItem ItemId="200887" Cnt="1" Odds="60"/>
+		<OutItem ItemId="200866" Cnt="1" Odds="30"/>
+		<OutItem ItemId="200845" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1010" ItemId="0" ItemLv="40 45" EquipPart="6" RoleType="2" Costs="1410063 1">
+		<OutItem ItemId="200882" Cnt="1" Odds="60"/>
+		<OutItem ItemId="200861" Cnt="1" Odds="30"/>
+		<OutItem ItemId="200840" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1011" ItemId="0" ItemLv="40 45" EquipPart="7" RoleType="2" Costs="1410063 1">
+		<OutItem ItemId="200885" Cnt="1" Odds="60"/>
+		<OutItem ItemId="200864" Cnt="1" Odds="30"/>
+		<OutItem ItemId="200843" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1012" ItemId="0" ItemLv="40 45" EquipPart="8" RoleType="2" Costs="1410063 1">
+		<OutItem ItemId="200883" Cnt="1" Odds="60"/>
+		<OutItem ItemId="200862" Cnt="1" Odds="30"/>
+		<OutItem ItemId="200841" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1013" ItemId="0" ItemLv="40 45" EquipPart="9" RoleType="2" Costs="1410063 1">
+		<OutItem ItemId="200886" Cnt="1" Odds="60"/>
+		<OutItem ItemId="200865" Cnt="1" Odds="30"/>
+		<OutItem ItemId="200844" Cnt="1" Odds="10"/>
+	</TransInfo>
+
+	<TransInfo ID="1014" ItemId="0" ItemLv="40 45" EquipPart="1" RoleType="3" Costs="1410063 1">
+		<OutItem ItemId="300881" Cnt="1" Odds="60"/>
+		<OutItem ItemId="300860" Cnt="1" Odds="30"/>
+		<OutItem ItemId="300839" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1015" ItemId="0" ItemLv="40 45" EquipPart="3" RoleType="3" Costs="1410063 1">
+		<OutItem ItemId="300884" Cnt="1" Odds="60"/>
+		<OutItem ItemId="300863" Cnt="1" Odds="30"/>
+		<OutItem ItemId="300842" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1016" ItemId="0" ItemLv="40 45" EquipPart="4" RoleType="3" Costs="1410063 1">
+		<OutItem ItemId="300887" Cnt="1" Odds="60"/>
+		<OutItem ItemId="300866" Cnt="1" Odds="30"/>
+		<OutItem ItemId="300845" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1017" ItemId="0" ItemLv="40 45" EquipPart="6" RoleType="3" Costs="1410063 1">
+		<OutItem ItemId="300882" Cnt="1" Odds="60"/>
+		<OutItem ItemId="300861" Cnt="1" Odds="30"/>
+		<OutItem ItemId="300840" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1018" ItemId="0" ItemLv="40 45" EquipPart="7" RoleType="3" Costs="1410063 1">
+		<OutItem ItemId="300885" Cnt="1" Odds="60"/>
+		<OutItem ItemId="300864" Cnt="1" Odds="30"/>
+		<OutItem ItemId="300843" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1019" ItemId="0" ItemLv="40 45" EquipPart="8" RoleType="3" Costs="1410063 1">
+		<OutItem ItemId="300883" Cnt="1" Odds="60"/>
+		<OutItem ItemId="300862" Cnt="1" Odds="30"/>
+		<OutItem ItemId="300841" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1020" ItemId="0" ItemLv="40 45" EquipPart="9" RoleType="3" Costs="1410063 1">
+		<OutItem ItemId="300886" Cnt="1" Odds="60"/>
+		<OutItem ItemId="300865" Cnt="1" Odds="30"/>
+		<OutItem ItemId="300844" Cnt="1" Odds="10"/>
+	</TransInfo>
+
+	<TransInfo ID="1021" ItemId="0" ItemLv="40 45" EquipPart="1" RoleType="4" Costs="1410063 1">
+		<OutItem ItemId="400881" Cnt="1" Odds="60"/>
+		<OutItem ItemId="400860" Cnt="1" Odds="30"/>
+		<OutItem ItemId="400839" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1022" ItemId="0" ItemLv="40 45" EquipPart="3" RoleType="4" Costs="1410063 1">
+		<OutItem ItemId="400884" Cnt="1" Odds="60"/>
+		<OutItem ItemId="400863" Cnt="1" Odds="30"/>
+		<OutItem ItemId="400842" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1023" ItemId="0" ItemLv="40 45" EquipPart="4" RoleType="4" Costs="1410063 1">
+		<OutItem ItemId="400887" Cnt="1" Odds="60"/>
+		<OutItem ItemId="400866" Cnt="1" Odds="30"/>
+		<OutItem ItemId="400845" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1024" ItemId="0" ItemLv="40 45" EquipPart="6" RoleType="4" Costs="1410063 1">
+		<OutItem ItemId="400882" Cnt="1" Odds="60"/>
+		<OutItem ItemId="400861" Cnt="1" Odds="30"/>
+		<OutItem ItemId="400840" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1025" ItemId="0" ItemLv="40 45" EquipPart="7" RoleType="4" Costs="1410063 1">
+		<OutItem ItemId="400885" Cnt="1" Odds="60"/>
+		<OutItem ItemId="400864" Cnt="1" Odds="30"/>
+		<OutItem ItemId="400843" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1026" ItemId="0" ItemLv="40 45" EquipPart="8" RoleType="4" Costs="1410063 1">
+		<OutItem ItemId="400883" Cnt="1" Odds="60"/>
+		<OutItem ItemId="400862" Cnt="1" Odds="30"/>
+		<OutItem ItemId="400841" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1027" ItemId="0" ItemLv="40 45" EquipPart="9" RoleType="4" Costs="1410063 1">
+		<OutItem ItemId="400886" Cnt="1" Odds="60"/>
+		<OutItem ItemId="400865" Cnt="1" Odds="30"/>
+		<OutItem ItemId="400844" Cnt="1" Odds="10"/>
+	</TransInfo>
+
+	<TransInfo ID="1028" ItemId="0" ItemLv="46 55" EquipPart="1" RoleType="1" Costs="1410063 1">
+		<OutItem ItemId="100888" Cnt="1" Odds="60"/>
+		<OutItem ItemId="100867" Cnt="1" Odds="30"/>
+		<OutItem ItemId="100846" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1029" ItemId="0" ItemLv="46 55" EquipPart="3" RoleType="1" Costs="1410063 1">
+		<OutItem ItemId="100891" Cnt="1" Odds="60"/>
+		<OutItem ItemId="100870" Cnt="1" Odds="30"/>
+		<OutItem ItemId="100849" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1030" ItemId="0" ItemLv="46 55" EquipPart="4" RoleType="1" Costs="1410063 1">
+		<OutItem ItemId="100894" Cnt="1" Odds="60"/>
+		<OutItem ItemId="100873" Cnt="1" Odds="30"/>
+		<OutItem ItemId="100852" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1031" ItemId="0" ItemLv="46 55" EquipPart="6" RoleType="1" Costs="1410063 1">
+		<OutItem ItemId="100889" Cnt="1" Odds="60"/>
+		<OutItem ItemId="100868" Cnt="1" Odds="30"/>
+		<OutItem ItemId="100847" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1032" ItemId="0" ItemLv="46 55" EquipPart="7" RoleType="1" Costs="1410063 1">
+		<OutItem ItemId="100892" Cnt="1" Odds="60"/>
+		<OutItem ItemId="100871" Cnt="1" Odds="30"/>
+		<OutItem ItemId="100850" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1033" ItemId="0" ItemLv="46 55" EquipPart="8" RoleType="1" Costs="1410063 1">
+		<OutItem ItemId="100890" Cnt="1" Odds="60"/>
+		<OutItem ItemId="100869" Cnt="1" Odds="30"/>
+		<OutItem ItemId="100848" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1034" ItemId="0" ItemLv="46 55" EquipPart="9" RoleType="1" Costs="1410063 1">
+		<OutItem ItemId="100893" Cnt="1" Odds="60"/>
+		<OutItem ItemId="100872" Cnt="1" Odds="30"/>
+		<OutItem ItemId="100851" Cnt="1" Odds="10"/>
+	</TransInfo>
+
+	<TransInfo ID="1035" ItemId="0" ItemLv="46 55" EquipPart="1" RoleType="2" Costs="1410063 1">
+		<OutItem ItemId="200888" Cnt="1" Odds="60"/>
+		<OutItem ItemId="200867" Cnt="1" Odds="30"/>
+		<OutItem ItemId="200846" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1036" ItemId="0" ItemLv="46 55" EquipPart="3" RoleType="2" Costs="1410063 1">
+		<OutItem ItemId="200891" Cnt="1" Odds="60"/>
+		<OutItem ItemId="200870" Cnt="1" Odds="30"/>
+		<OutItem ItemId="200849" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1037" ItemId="0" ItemLv="46 55" EquipPart="4" RoleType="2" Costs="1410063 1">
+		<OutItem ItemId="200894" Cnt="1" Odds="60"/>
+		<OutItem ItemId="200873" Cnt="1" Odds="30"/>
+		<OutItem ItemId="200852" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1038" ItemId="0" ItemLv="46 55" EquipPart="6" RoleType="2" Costs="1410063 1">
+		<OutItem ItemId="200889" Cnt="1" Odds="60"/>
+		<OutItem ItemId="200868" Cnt="1" Odds="30"/>
+		<OutItem ItemId="200847" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1039" ItemId="0" ItemLv="46 55" EquipPart="7" RoleType="2" Costs="1410063 1">
+		<OutItem ItemId="200892" Cnt="1" Odds="60"/>
+		<OutItem ItemId="200871" Cnt="1" Odds="30"/>
+		<OutItem ItemId="200850" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1040" ItemId="0" ItemLv="46 55" EquipPart="8" RoleType="2" Costs="1410063 1">
+		<OutItem ItemId="200890" Cnt="1" Odds="60"/>
+		<OutItem ItemId="200869" Cnt="1" Odds="30"/>
+		<OutItem ItemId="200848" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1041" ItemId="0" ItemLv="46 55" EquipPart="9" RoleType="2" Costs="1410063 1">
+		<OutItem ItemId="200893" Cnt="1" Odds="60"/>
+		<OutItem ItemId="200872" Cnt="1" Odds="30"/>
+		<OutItem ItemId="200851" Cnt="1" Odds="10"/>
+	</TransInfo>
+
+	<TransInfo ID="1042" ItemId="0" ItemLv="46 55" EquipPart="1" RoleType="3" Costs="1410063 1">
+		<OutItem ItemId="300888" Cnt="1" Odds="60"/>
+		<OutItem ItemId="300867" Cnt="1" Odds="30"/>
+		<OutItem ItemId="300846" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1043" ItemId="0" ItemLv="46 55" EquipPart="3" RoleType="3" Costs="1410063 1">
+		<OutItem ItemId="300891" Cnt="1" Odds="60"/>
+		<OutItem ItemId="300870" Cnt="1" Odds="30"/>
+		<OutItem ItemId="300849" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1044" ItemId="0" ItemLv="46 55" EquipPart="4" RoleType="3" Costs="1410063 1">
+		<OutItem ItemId="300894" Cnt="1" Odds="60"/>
+		<OutItem ItemId="300873" Cnt="1" Odds="30"/>
+		<OutItem ItemId="300852" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1045" ItemId="0" ItemLv="46 55" EquipPart="6" RoleType="3" Costs="1410063 1">
+		<OutItem ItemId="300889" Cnt="1" Odds="60"/>
+		<OutItem ItemId="300868" Cnt="1" Odds="30"/>
+		<OutItem ItemId="300847" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1046" ItemId="0" ItemLv="46 55" EquipPart="7" RoleType="3" Costs="1410063 1">
+		<OutItem ItemId="300892" Cnt="1" Odds="60"/>
+		<OutItem ItemId="300871" Cnt="1" Odds="30"/>
+		<OutItem ItemId="300850" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1047" ItemId="0" ItemLv="46 55" EquipPart="8" RoleType="3" Costs="1410063 1">
+		<OutItem ItemId="300890" Cnt="1" Odds="60"/>
+		<OutItem ItemId="300869" Cnt="1" Odds="30"/>
+		<OutItem ItemId="300848" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1048" ItemId="0" ItemLv="46 55" EquipPart="9" RoleType="3" Costs="1410063 1">
+		<OutItem ItemId="300893" Cnt="1" Odds="60"/>
+		<OutItem ItemId="300872" Cnt="1" Odds="30"/>
+		<OutItem ItemId="300851" Cnt="1" Odds="10"/>
+	</TransInfo>
+
+	<TransInfo ID="1049" ItemId="0" ItemLv="46 55" EquipPart="1" RoleType="4" Costs="1410063 1">
+		<OutItem ItemId="400888" Cnt="1" Odds="60"/>
+		<OutItem ItemId="400867" Cnt="1" Odds="30"/>
+		<OutItem ItemId="400846" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1050" ItemId="0" ItemLv="46 55" EquipPart="3" RoleType="4" Costs="1410063 1">
+		<OutItem ItemId="400891" Cnt="1" Odds="60"/>
+		<OutItem ItemId="400870" Cnt="1" Odds="30"/>
+		<OutItem ItemId="400849" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1051" ItemId="0" ItemLv="46 55" EquipPart="4" RoleType="4" Costs="1410063 1">
+		<OutItem ItemId="400894" Cnt="1" Odds="60"/>
+		<OutItem ItemId="400873" Cnt="1" Odds="30"/>
+		<OutItem ItemId="400852" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1052" ItemId="0" ItemLv="46 55" EquipPart="6" RoleType="4" Costs="1410063 1">
+		<OutItem ItemId="400889" Cnt="1" Odds="60"/>
+		<OutItem ItemId="400868" Cnt="1" Odds="30"/>
+		<OutItem ItemId="400847" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1053" ItemId="0" ItemLv="46 55" EquipPart="7" RoleType="4" Costs="1410063 1">
+		<OutItem ItemId="400892" Cnt="1" Odds="60"/>
+		<OutItem ItemId="400871" Cnt="1" Odds="30"/>
+		<OutItem ItemId="400850" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1054" ItemId="0" ItemLv="46 55" EquipPart="8" RoleType="4" Costs="1410063 1">
+		<OutItem ItemId="400890" Cnt="1" Odds="60"/>
+		<OutItem ItemId="400869" Cnt="1" Odds="30"/>
+		<OutItem ItemId="400848" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1055" ItemId="0" ItemLv="46 55" EquipPart="9" RoleType="4" Costs="1410063 1">
+		<OutItem ItemId="400893" Cnt="1" Odds="60"/>
+		<OutItem ItemId="400872" Cnt="1" Odds="30"/>
+		<OutItem ItemId="400851" Cnt="1" Odds="10"/>
+	</TransInfo>
+
+	<TransInfo ID="1056" ItemId="0" ItemLv="56 100" EquipPart="1" RoleType="1" Costs="1410063 1">
+		<OutItem ItemId="100895" Cnt="1" Odds="60"/>
+		<OutItem ItemId="100874" Cnt="1" Odds="30"/>
+		<OutItem ItemId="100853" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1057" ItemId="0" ItemLv="56 100" EquipPart="3" RoleType="1" Costs="1410063 1">
+		<OutItem ItemId="100898" Cnt="1" Odds="60"/>
+		<OutItem ItemId="100877" Cnt="1" Odds="30"/>
+		<OutItem ItemId="100856" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1058" ItemId="0" ItemLv="56 100" EquipPart="4" RoleType="1" Costs="1410063 1">
+		<OutItem ItemId="100901" Cnt="1" Odds="60"/>
+		<OutItem ItemId="100880" Cnt="1" Odds="30"/>
+		<OutItem ItemId="100859" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1059" ItemId="0" ItemLv="56 100" EquipPart="6" RoleType="1" Costs="1410063 1">
+		<OutItem ItemId="100896" Cnt="1" Odds="60"/>
+		<OutItem ItemId="100875" Cnt="1" Odds="30"/>
+		<OutItem ItemId="100854" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1060" ItemId="0" ItemLv="56 100" EquipPart="7" RoleType="1" Costs="1410063 1">
+		<OutItem ItemId="100899" Cnt="1" Odds="60"/>
+		<OutItem ItemId="100878" Cnt="1" Odds="30"/>
+		<OutItem ItemId="100857" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1061" ItemId="0" ItemLv="56 100" EquipPart="8" RoleType="1" Costs="1410063 1">
+		<OutItem ItemId="100897" Cnt="1" Odds="60"/>
+		<OutItem ItemId="100876" Cnt="1" Odds="30"/>
+		<OutItem ItemId="100855" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1062" ItemId="0" ItemLv="56 100" EquipPart="9" RoleType="1" Costs="1410063 1">
+		<OutItem ItemId="100900" Cnt="1" Odds="60"/>
+		<OutItem ItemId="100879" Cnt="1" Odds="30"/>
+		<OutItem ItemId="100858" Cnt="1" Odds="10"/>
+	</TransInfo>
+
+	<TransInfo ID="1063" ItemId="0" ItemLv="56 100" EquipPart="1" RoleType="2" Costs="1410063 1">
+		<OutItem ItemId="200895" Cnt="1" Odds="60"/>
+		<OutItem ItemId="200874" Cnt="1" Odds="30"/>
+		<OutItem ItemId="200853" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1064" ItemId="0" ItemLv="56 100" EquipPart="3" RoleType="2" Costs="1410063 1">
+		<OutItem ItemId="200898" Cnt="1" Odds="60"/>
+		<OutItem ItemId="200877" Cnt="1" Odds="30"/>
+		<OutItem ItemId="200856" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1065" ItemId="0" ItemLv="56 100" EquipPart="4" RoleType="2" Costs="1410063 1">
+		<OutItem ItemId="200901" Cnt="1" Odds="60"/>
+		<OutItem ItemId="200880" Cnt="1" Odds="30"/>
+		<OutItem ItemId="200859" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1066" ItemId="0" ItemLv="56 100" EquipPart="6" RoleType="2" Costs="1410063 1">
+		<OutItem ItemId="200896" Cnt="1" Odds="60"/>
+		<OutItem ItemId="200875" Cnt="1" Odds="30"/>
+		<OutItem ItemId="200854" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1067" ItemId="0" ItemLv="56 100" EquipPart="7" RoleType="2" Costs="1410063 1">
+		<OutItem ItemId="200899" Cnt="1" Odds="60"/>
+		<OutItem ItemId="200878" Cnt="1" Odds="30"/>
+		<OutItem ItemId="200857" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1068" ItemId="0" ItemLv="56 100" EquipPart="8" RoleType="2" Costs="1410063 1">
+		<OutItem ItemId="200897" Cnt="1" Odds="60"/>
+		<OutItem ItemId="200876" Cnt="1" Odds="30"/>
+		<OutItem ItemId="200855" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1069" ItemId="0" ItemLv="56 100" EquipPart="9" RoleType="2" Costs="1410063 1">
+		<OutItem ItemId="200900" Cnt="1" Odds="60"/>
+		<OutItem ItemId="200879" Cnt="1" Odds="30"/>
+		<OutItem ItemId="200858" Cnt="1" Odds="10"/>
+	</TransInfo>
+
+	<TransInfo ID="1070" ItemId="0" ItemLv="56 100" EquipPart="1" RoleType="3" Costs="1410063 1">
+		<OutItem ItemId="300895" Cnt="1" Odds="60"/>
+		<OutItem ItemId="300874" Cnt="1" Odds="30"/>
+		<OutItem ItemId="300853" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1071" ItemId="0" ItemLv="56 100" EquipPart="3" RoleType="3" Costs="1410063 1">
+		<OutItem ItemId="300898" Cnt="1" Odds="60"/>
+		<OutItem ItemId="300877" Cnt="1" Odds="30"/>
+		<OutItem ItemId="300856" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1072" ItemId="0" ItemLv="56 100" EquipPart="4" RoleType="3" Costs="1410063 1">
+		<OutItem ItemId="300901" Cnt="1" Odds="60"/>
+		<OutItem ItemId="300880" Cnt="1" Odds="30"/>
+		<OutItem ItemId="300859" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1073" ItemId="0" ItemLv="56 100" EquipPart="6" RoleType="3" Costs="1410063 1">
+		<OutItem ItemId="300896" Cnt="1" Odds="60"/>
+		<OutItem ItemId="300875" Cnt="1" Odds="30"/>
+		<OutItem ItemId="300854" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1074" ItemId="0" ItemLv="56 100" EquipPart="7" RoleType="3" Costs="1410063 1">
+		<OutItem ItemId="300899" Cnt="1" Odds="60"/>
+		<OutItem ItemId="300878" Cnt="1" Odds="30"/>
+		<OutItem ItemId="300857" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1075" ItemId="0" ItemLv="56 100" EquipPart="8" RoleType="3" Costs="1410063 1">
+		<OutItem ItemId="300897" Cnt="1" Odds="60"/>
+		<OutItem ItemId="300876" Cnt="1" Odds="30"/>
+		<OutItem ItemId="300855" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1076" ItemId="0" ItemLv="56 100" EquipPart="9" RoleType="3" Costs="1410063 1">
+		<OutItem ItemId="300900" Cnt="1" Odds="60"/>
+		<OutItem ItemId="300879" Cnt="1" Odds="30"/>
+		<OutItem ItemId="300858" Cnt="1" Odds="10"/>
+	</TransInfo>
+
+	<TransInfo ID="1077" ItemId="0" ItemLv="56 100" EquipPart="1" RoleType="4" Costs="1410063 1">
+		<OutItem ItemId="400895" Cnt="1" Odds="60"/>
+		<OutItem ItemId="400874" Cnt="1" Odds="30"/>
+		<OutItem ItemId="400853" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1078" ItemId="0" ItemLv="56 100" EquipPart="3" RoleType="4" Costs="1410063 1">
+		<OutItem ItemId="400898" Cnt="1" Odds="60"/>
+		<OutItem ItemId="400877" Cnt="1" Odds="30"/>
+		<OutItem ItemId="400856" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1079" ItemId="0" ItemLv="56 100" EquipPart="4" RoleType="4" Costs="1410063 1">
+		<OutItem ItemId="400901" Cnt="1" Odds="60"/>
+		<OutItem ItemId="400880" Cnt="1" Odds="30"/>
+		<OutItem ItemId="400859" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1080" ItemId="0" ItemLv="56 100" EquipPart="6" RoleType="4" Costs="1410063 1">
+		<OutItem ItemId="400896" Cnt="1" Odds="60"/>
+		<OutItem ItemId="400875" Cnt="1" Odds="30"/>
+		<OutItem ItemId="400854" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1081" ItemId="0" ItemLv="56 100" EquipPart="7" RoleType="4" Costs="1410063 1">
+		<OutItem ItemId="400899" Cnt="1" Odds="60"/>
+		<OutItem ItemId="400878" Cnt="1" Odds="30"/>
+		<OutItem ItemId="400857" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1082" ItemId="0" ItemLv="56 100" EquipPart="8" RoleType="4" Costs="1410063 1">
+		<OutItem ItemId="400897" Cnt="1" Odds="60"/>
+		<OutItem ItemId="400876" Cnt="1" Odds="30"/>
+		<OutItem ItemId="400855" Cnt="1" Odds="10"/>
+	</TransInfo>
+	<TransInfo ID="1083" ItemId="0" ItemLv="56 100" EquipPart="9" RoleType="4" Costs="1410063 1">
+		<OutItem ItemId="400900" Cnt="1" Odds="60"/>
+		<OutItem ItemId="400879" Cnt="1" Odds="30"/>
+		<OutItem ItemId="400858" Cnt="1" Odds="10"/>
+	</TransInfo>
+</TransInfos>

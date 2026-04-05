@@ -1,0 +1,297 @@
+<root>
+	<questions ID="1">
+		 
+		<question id="1" name="周一到周四，你平均每天花多少时间玩《功夫派》？">
+			<option index="1" lable="10分钟以内"/>
+			<option index="2" lable="10~30分钟"/>
+			<option index="3" lable="30分钟~1小时"/>
+			<option index="4" lable="1~2小时"/>
+			<option index="5" lable="2小时以上"/>
+		</question>
+		<question id="2" name="周五到周日，你平均每天花多少时间玩《功夫派》？">
+			<option index="1" lable="10分钟以内"/>
+			<option index="2" lable="10~30分钟"/>
+			<option index="3" lable="30分钟~1小时"/>
+			<option index="4" lable="1~2小时"/>
+			<option index="5" lable="2小时以上"/>
+            <option index="6" lable="3~4小时"/> 
+		</question>
+		<question id="3" name="你喜欢用键盘操作还是鼠标操作？">
+			<option index="1" lable="键盘"/>
+			<option index="2" lable="鼠标"/>
+			<option index="3" lable="无所谓"/>
+		</question>
+		<question id="4" name="你觉得《功夫派》增加哪种怪物类型比较好？">
+			<option index="1" lable="有四肢的人形怪物"/>
+			<option index="2" lable="奇形怪状的生物"/>
+		</question>
+		<question id="5" name="你觉得《功夫派》增加哪种怪物形象比较好？">
+			<option index="1" lable="可爱的，萌系生物"/>
+			<option index="2" lable="恐怖的，黑暗生物"/>
+		</question>
+		<question id="6" name="你希望《功夫派》最先增加哪种类型的灵兽？">
+			<option index="1" lable="高攻击，我不用打"/>
+			<option index="2" lable="高防御，怪打不死我"/>
+			<option index="3" lable="能加血的"/>
+			<option index="4" lable="能复活我的"/>
+		</question>
+		 
+	</questions>
+	<questions ID="2">
+		<question id="7" name="你觉得《功夫派》最好玩的任务是哪一类？">
+			<option index="1" lable="流程很长的主线任务"/>
+			<option index="2" lable="可以玩小游戏的 疾电之眼"/>
+			<option index="3" lable="寻找花二牙和壁虎这类的解谜任务"/>
+			<option index="4" lable="打怪收集任务"/>
+			<option index="5" lable="以上我都不喜欢"/>
+		</question>
+		<question id="8" name="你希望《功夫派》出哪种可以通过米币购买的道具呢？">
+			<option index="1" lable="起死回生草"/>
+			<option index="2" lable="攻击高、拉风的武器"/>
+			<option index="3" lable="防御高的装备"/>
+			<option index="4" lable="特殊技能的灵兽"/>
+			<option index="5" lable="都想要，出了我都会买"/>
+		</question>
+		<question id="9" name="目前你已经在《功夫派》充值多少米币了？">
+			<option index="1" lable="一毛钱也没花"/>
+			<option index="2" lable="10元以下"/>
+			<option index="3" lable="10~30元"/>
+			<option index="4" lable="30~50元"/>
+			<option index="5" lable="50~100元"/>
+            <option index="6" lable="100元以上"/>
+		</question>
+		<question id="10" name="你的最高等级是？">
+			<option index="1" lable="10级以下"/>
+			<option index="2" lable="10~15级"/>
+			<option index="3" lable="16~25级"/>
+			<option index="4" lable="26~35级"/>
+			<option index="5" lable="36级以上"/>
+		</question>
+		<question id="11" name="你的年龄是？">
+			<option index="1" lable="8岁以下"/>
+			<option index="2" lable="9~12岁"/>
+			<option index="3" lable="12~15岁"/>
+			<option index="4" lable="16~18岁"/>
+			<option index="5" lable="我成年了"/>
+		</question>
+		<question id="12" name="你的性别是？">
+			<option index="1" lable="帅气的少侠"/>
+			<option index="2" lable="美丽的女侠"/>
+		</question>
+	</questions>
+	<questions ID="3">
+		<question id="13" name="你觉得功夫派需要小侠士组队行动吗？">
+			<option index="1" lable="我们要组队一起战胜恶魔"/>
+			<option index="2" lable="无所谓，都可以"/>
+			<option index="3" lable="我要单独行动，我才是真正的英雄"/>
+		</question>
+		<question id="14" name="你觉得组队最吸引你的是什么">
+			<option index="1" lable="可以和同伴一起战斗了"/>
+			<option index="2" lable="关卡变的更简单了"/>
+			<option index="3" lable="更快的升级"/>
+			<option index="4" lable="趣味性更强了"/>
+		</question>
+	</questions>
+	<questions ID="4">
+		<question id="15" name=" 你听说过《功夫派》么？" MultipleSelect="1">
+			<option index="1" lable="听说过"/>
+			<option index="2" lable="没有听说过"/>
+		</question>
+		<question id="16" name=" 你觉得功夫派上手容易玩吗？">
+			<option index="1" lable="很简单，不用仔细看新手教程，试试就会了"/>
+			<option index="2" lable="玩了一阵后就熟练操作,新手教程对我帮助很大"/>
+			<option index="3" lable="键盘操作不方便，要能全鼠标操作就好了"/>
+			<option index="4" lable="很难玩，不知道该怎么操作"/>
+		</question>
+		<question id="17" name=" 你希望《功夫派》是什么类型的游戏？">
+			<option index="1" lable="打怪轻松，拿到好的装备简单一些"/>
+			<option index="2" lable="稍有难度，和怪物作战惊险刺激"/>
+			<option index="3" lable="较为复杂，作战方式和怪物多种多样"/>
+		</question>
+		<question id="18" name="在《功夫派》中战斗时，哪件事情让你不能接受？">
+			<option index="1" lable="不停地按C键，手指很累"/>
+			<option index="2" lable="技能单调，没有收集谜之琥珀的动力"/>
+			<option index="3" lable="怪物单调，没有重复打某个关卡的动力"/>
+			<option index="4" lable="关卡单调，没有机关或陷阱的挑战乐趣"/>
+			<option index="5" lable="装备太难出，想打出自己需要的装备很困难"/>
+			<option index="6" lable="困难关卡的怪物太难打，让人崩溃"/>
+			<option index="7" lable="灵兽太弱，还不如自己打"/>
+		</question>
+		<question id="19" name=" 《功夫派》中最吸引你的是什么？">
+			<option index="1" lable="替我作战的可爱灵兽"/>
+			<option index="2" lable="强悍的高级装备"/>
+			<option index="3" lable="未知的怪物和关卡"/>
+			<option index="4" lable="战斗时痛快的感觉"/>
+			<option index="5" lable="人物、画面、色彩，很好看，很适合我"/>
+			<option index="6" lable="故事情节设计，很想知道接下去发生的事情"/>
+		</question>
+		<question id="20" name=" 哪些活动会让你一定要上功夫派？">
+			<option index="1" lable=" 有丰富的奖励的。"/>
+			<option index="2" lable=" 有故事情节，有期待的。"/>
+			<option index="3" lable=" 有竞技性的，可以分出胜负的。"/>
+			<option index="4" lable=" 关于节日的活动。"/>
+		</question>
+		<question id="21" name="你觉得有一天你不玩功夫派了是因为什么？">
+			<option index="1" lable=" 所有东西我都得到了，没有追求了。"/>
+			<option index="2" lable=" 故事情节太枯燥，不想继续下去了。"/>
+			<option index="3" lable=" 太累了，没有时间打了，还是喜欢休闲一点。"/>
+			<option index="4" lable=" 关于节日的活动。"/>
+		</question>
+		<question id="22" name="你觉得功夫派最大的缺点是？">
+			<option index="1" lable=" 仅仅是多一人作战，双方合力攻击怪物将它击败"/>
+			<option index="2" lable=" 突出组队的作用，增加两个人才能使用的合体技"/>
+			<option index="3" lable=" 一人作战一人辅助，协作击败怪物"/>
+		</question>
+	</questions>
+	<questions ID="5">
+		<question id="23" name="你最喜欢什么类型的书？">
+			<option index="1" lable="快乐、搞笑、幽默的漫画书。"/>
+			<option index="2" lable="展现各种武功招式，风格很酷的功夫漫画书。"/>
+			<option index="3" lable="文字为主的奇幻冒险故事书。"/>
+			<option index="4" lable="能解决游戏中遇到的各种难题的攻略书。"/>
+		</question>
+		<question id="24" name="你心里最想知道的是谁从前的神奇经历？">
+			<option index="1" lable="猴子派派。"/>
+			<option index="2" lable="兔子伊尔。"/>
+			<option index="3" lable="熊猫大竹。"/>
+			<option index="4" lable="武圣爷爷。"/>
+			<option index="5" lable="黑衣人。"/>
+		</question>
+		<question id="25" name="你习惯去哪里买书看呢？">
+			<option index="1" lable="去书店里。"/>
+			<option index="2" lable="去报刊杂志亭。"/>
+			<option index="3" lable="去学校附近的商店里。"/>
+			<option index="4" lable="和家长去大商场的时候买书。"/>
+		</question>
+		<question id="26" name="如果买一本书送给你一件礼物，你希望是什么？">
+			<option index="1" lable="猴子派派、兔子伊尔、熊猫大竹的神奇小徽章。"/>
+			<option index="2" lable="猴子派派、兔子伊尔、熊猫大竹的精美收集卡和功夫档案."/>
+			<option index="3" lable="各种灵兽的精美收集卡。"/>
+			<option index="4" lable="有功夫城神秘人物签名的超酷《功夫派》收藏海报。"/>
+		</question>
+	</questions>
+	<questions ID="6">
+		<question id="27" name="每天吃完饭要帮爸爸妈妈洗碗" ans="1">
+			<option index="1" lable="是"/>
+			<option index="2" lable="否"/>
+		</question>
+		<question id="28" name="遇到陌生人敲门要先和爸爸妈妈说" ans="1">
+			<option index="1" lable="是"/>
+			<option index="2" lable="否"/>
+		</question>
+		<question id="29" name="每天吃饭前要洗手" ans="1">
+			<option index="1" lable="是"/>
+			<option index="2" lable="否"/>
+		</question>
+		<question id="30" name="功夫派的口号是：童年梦想，功夫自强" ans="1">
+			<option index="1" lable="是"/>
+			<option index="2" lable="否"/>
+		</question>
+		<question id="30" name="每周至少帮助爸爸妈妈打扫一次卫生" ans="1">
+			<option index="1" lable="是"/>
+			<option index="2" lable="否"/>
+		</question>
+	</questions>
+	<questions ID="7">
+		<question id="31" name="每天吃完饭要帮爸爸妈妈洗碗" ans="1" MultipleSelect="1">
+			<option index="1" lable="是"/>
+			<option index="2" lable="否"/>
+			<option index="3" lable="否"/>
+			<option index="4" lable="否"/>
+			<option index="5" lable="否"/>
+			<option index="6" lable="否"/>
+			<option index="7" lable="否"/>
+			<option index="8" lable="否"/>
+			<option index="9" lable="否"/>
+			<option index="10" lable="否"/>
+			<option index="11" lable="否"/>
+			<option index="12" lable="否"/>
+			<option index="13" lable="否"/>
+			<option index="14" lable="否"/>
+			<option index="15" lable="否"/>
+			<option index="16" lable="否"/>
+			<option index="17" lable="否"/>
+			<option index="18" lable="否"/>
+		</question>
+		<question id="32" name="每天吃完饭要帮爸爸妈妈洗碗" ans="1" MultipleSelect="1">
+			<option index="1" lable="是"/>
+			<option index="2" lable="否"/>
+			<option index="3" lable="否"/>
+			<option index="4" lable="否"/>
+			<option index="5" lable="否"/>
+			<option index="6" lable="否"/>
+			<option index="7" lable="否"/>
+			<option index="8" lable="否"/>
+			<option index="9" lable="否"/>
+			<option index="10" lable="否"/>
+			<option index="11" lable="否"/>
+			<option index="12" lable="否"/>
+			<option index="13" lable="否"/>
+			<option index="14" lable="否"/>
+			<option index="15" lable="否"/>
+			<option index="16" lable="否"/>
+			<option index="17" lable="否"/>
+			<option index="18" lable="否"/>
+		</question>
+		<question id="33" name="每天吃完饭要帮爸爸妈妈洗碗" ans="1" MultipleSelect="1">
+			<option index="1" lable="是"/>
+			<option index="2" lable="否"/>
+			<option index="3" lable="否"/>
+			<option index="4" lable="否"/>
+			<option index="5" lable="否"/>
+			<option index="6" lable="否"/>
+			<option index="7" lable="否"/>
+			<option index="8" lable="否"/>
+			<option index="9" lable="否"/>
+			<option index="10" lable="否"/>
+			<option index="11" lable="否"/>
+			<option index="12" lable="否"/>
+			<option index="13" lable="否"/>
+			<option index="14" lable="否"/>
+			<option index="15" lable="否"/>
+			<option index="16" lable="否"/>
+			<option index="17" lable="否"/>
+			<option index="18" lable="否"/>
+		</question>
+		<question id="34" name="每天吃完饭要帮爸爸妈妈洗碗" ans="1" MultipleSelect="1">
+			<option index="1" lable="是"/>
+			<option index="2" lable="否"/>
+			<option index="3" lable="否"/>
+			<option index="4" lable="否"/>
+			<option index="5" lable="否"/>
+			<option index="6" lable="否"/>
+			<option index="7" lable="否"/>
+			<option index="8" lable="否"/>
+			<option index="9" lable="否"/>
+			<option index="10" lable="否"/>
+			<option index="11" lable="否"/>
+			<option index="12" lable="否"/>
+			<option index="13" lable="否"/>
+			<option index="14" lable="否"/>
+			<option index="15" lable="否"/>
+			<option index="16" lable="否"/>
+			<option index="17" lable="否"/>
+			<option index="18" lable="否"/>
+		</question>
+		<question id="35" name="每天吃完饭要帮爸爸妈妈洗碗" ans="1" MultipleSelect="1">
+			<option index="1" lable="是"/>
+			<option index="2" lable="否"/>
+			<option index="3" lable="否"/>
+			<option index="4" lable="否"/>
+			<option index="5" lable="否"/>
+			<option index="6" lable="否"/>
+			<option index="7" lable="否"/>
+			<option index="8" lable="否"/>
+			<option index="9" lable="否"/>
+			<option index="10" lable="否"/>
+			<option index="11" lable="否"/>
+			<option index="12" lable="否"/>
+			<option index="13" lable="否"/>
+			<option index="14" lable="否"/>
+			<option index="15" lable="否"/>
+			<option index="16" lable="否"/>
+			<option index="17" lable="否"/>
+			<option index="18" lable="否"/>
+		</question>
+	</questions>
+</root>
