@@ -34,6 +34,11 @@ declare class GFPServer {
     private handlePvpMove;
     private handleSkill;
     private handleItemPickup;
+    private handleBruise;
+    private handleBuffState;
+    private handleMapSwitch;
+    private getMapConfig;
+    private getSpawnPoint;
     private createPlayer;
     private getWsByClientId;
     private validatePosition;
@@ -45,6 +50,9 @@ declare class GFPServer {
     private broadcastPlayerPvpMove;
     private broadcastPlayerSkill;
     private broadcastPlayerLeave;
+    private broadcastPlayerDeath;
+    private broadcastPlayerBruise;
+    private broadcastPlayerBuff;
     private broadcastToOthers;
     private broadcast;
     getPlayerCount(): number;

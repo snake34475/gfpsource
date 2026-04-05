@@ -165,6 +165,19 @@ class SocketClient extends events_1.EventEmitter {
     useSkill(skillId, skillLv, x, y, targetId = 0) {
         this.send(CommandID_1.CommandID.ACTION_SKILL, skillId, skillLv, x, y, targetId);
     }
+    login(info) {
+        const { session, roleTime, serverVersion = "1.0", clientType = 1, isAdult = 0, fromeGameID = "" } = info;
+        this.send(CommandID_1.CommandID.LOGIN_IN, session, roleTime, serverVersion, clientType, isAdult, fromeGameID);
+    }
+    selectRole(roleId) {
+        this.send(CommandID_1.CommandID.SELECT_ROLE, roleId);
+    }
+    enterGame() {
+        this.send(CommandID_1.CommandID.ENTER_GAME);
+    }
+    logout() {
+        this.send(CommandID_1.CommandID.LOGIN_OUT);
+    }
 }
 exports.SocketClient = SocketClient;
 exports.socketClient = new SocketClient();

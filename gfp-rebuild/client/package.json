@@ -6,7 +6,10 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/client.js",
-    "dev": "tsc && node dist/client.js"
+    "dev": "tsc && node dist/client.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
     "ws": "^8.16.0"
@@ -14,6 +17,8 @@
   "devDependencies": {
     "@types/node": "^20.11.0",
     "@types/ws": "^8.5.10",
-    "typescript": "^5.3.3"
+    "@vitest/coverage-v8": "^4.1.2",
+    "typescript": "^5.3.3",
+    "vitest": "^4.1.2"
   }
 }
