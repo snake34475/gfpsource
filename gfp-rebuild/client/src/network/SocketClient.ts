@@ -4,6 +4,28 @@ import { CommandID } from "./CommandID";
 import { PacketEncoder } from "./PacketEncoder";
 import { PacketDecoder, DecodedPacket } from "./PacketDecoder";
 
+export interface LoginInfo {
+  session: string;
+  roleTime: number;
+  serverVersion?: string;
+  clientType?: number;
+  isAdult?: number;
+  fromeGameID?: string;
+}
+
+export interface RoleInfo {
+  roleId: number;
+  roleName: string;
+  roleType: number;
+  level: number;
+  hp: number;
+  mp: number;
+  exp: number;
+  mapId: number;
+  pos: { x: number; y: number };
+  direction: number;
+}
+
 export type MessageHandler = (data: any, userId?: number) => void;
 
 export class SocketClient extends EventEmitter {
@@ -187,6 +209,23 @@ export class SocketClient extends EventEmitter {
 
   useSkill(skillId: number, skillLv: number, x: number, y: number, targetId: number = 0): void {
     this.send(CommandID.ACTION_SKILL, skillId, skillLv, x, y, targetId);
+  }
+
+  login(info: LoginInfo): void {
+    const { session, roleTime, serverVersion = "1.0", clientType = 1, isAdult = 0, fromeGameID = "" } = info;
+    this.send(CommandID.LOGIN_IN, session, roleTime, serverVersion, clientType, isAdult, fromeGameID);
+  }
+
+  selectRole(roleId: number): void {
+    this.send(CommandID.SELECT_ROLE, roleId);
+  }
+
+  enterGame(): void {
+    this.send(CommandID.ENTER_GAME);
+  }
+
+  logout(): void {
+    this.send(CommandID.LOGIN_OUT);
   }
 }
 

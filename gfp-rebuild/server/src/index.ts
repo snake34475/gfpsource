@@ -142,6 +142,8 @@ class GFPServer {
     this.handlers.set(1004, this.handlePvpMove.bind(this));
     this.handlers.set(2004, this.handleSkill.bind(this));
     this.handlers.set(3001, this.handleItemPickup.bind(this));
+    this.handlers.set(2003, this.handleBruise.bind(this));
+    this.handlers.set(2005, this.handleBuffState.bind(this));
   }
 
   private handleMove(client: Client, data: any): void {
@@ -281,6 +283,60 @@ class GFPServer {
     console.log(`[GFP Server] Player ${client.player.id} picked up ${items.length} items`);
   }
 
+  private handleBruise(client: Client, data: any): void {
+    console.log("[GFP Server] ACTION_BRUISE:", data);
+
+    if (!client.player) {
+      console.log("[GFP Server] Player not initialized for bruise");
+      return;
+    }
+
+    const attackerId = data.atkerID || 0;
+    const targetId = data.userID || 0;
+    const damage = data.decHP || 0;
+    const newHp = data.hp || 0;
+    const skillId = data.skillID || 0;
+    const hitType = data.type || 0;
+    const hitCount = data.hitCount || 1;
+
+    console.log(`[GFP Server] Player ${targetId} took ${damage} damage from ${attackerId} (HP: ${newHp})`);
+
+    if (newHp <= 0) {
+      console.log(`[GFP Server] Player ${targetId} died (HP <= 0)`);
+      this.broadcastPlayerDeath(client.player);
+    } else {
+      this.broadcastPlayerBruise(client.player, attackerId, damage, newHp, skillId, hitType, hitCount);
+    }
+
+    if (attackerId === client.player.id) {
+      console.log(`[GFP Server] Player ${attackerId} dealt ${damage} damage`);
+    }
+  }
+
+  private handleBuffState(client: Client, data: any): void {
+    console.log("[GFP Server] BUFF_STATE:", data);
+
+    if (!client.player) {
+      console.log("[GFP Server] Player not initialized for buff state");
+      return;
+    }
+
+    const targetId = data.userID || 0;
+    const buffId = data.buffID || 0;
+    const buffLevel = data.buffLv || 1;
+    const buffType = data.buffType || 0;
+    const duration = data.duration || 0;
+    const state = data.state || 0;
+
+    console.log(`[GFP Server] Player ${targetId} buff state: ${buffId} Lv${buffLevel} (${state === 1 ? 'add' : state === 2 ? 'remove' : 'update'})`);
+
+    if (targetId === client.player.id) {
+      client.player.lastUpdate = Date.now();
+    }
+
+    this.broadcastPlayerBuff(client.player, buffId, buffLevel, buffType, duration, state);
+  }
+
   private createPlayer(id: number): Player {
     const ws = this.getWsByClientId(id);
     const player: Player = {
@@ -408,6 +464,36 @@ class GFPServer {
   private broadcastPlayerLeave(playerId: number): void {
     const packet = PacketEncoder.encode(14003, { userId: playerId });
     this.broadcast(packet);
+  }
+
+  private broadcastPlayerDeath(player: Player): void {
+    const packet = PacketEncoder.encode(2003, { userId: player.id, hp: 0, isDead: true });
+    this.broadcast(packet);
+  }
+
+  private broadcastPlayerBruise(player: Player, attackerId: number, damage: number, newHp: number, skillId: number, hitType: number, hitCount: number): void {
+    const packet = PacketEncoder.encode(2003, {
+      userId: player.id,
+      atkerID: attackerId,
+      decHP: damage,
+      hp: newHp,
+      skillID: skillId,
+      type: hitType,
+      hitCount: hitCount
+    });
+    this.broadcastToOthers(player.id, packet);
+  }
+
+  private broadcastPlayerBuff(player: Player, buffId: number, buffLevel: number, buffType: number, duration: number, state: number): void {
+    const packet = PacketEncoder.encode(2005, {
+      userId: player.id,
+      buffID: buffId,
+      buffLv: buffLevel,
+      buffType: buffType,
+      duration: duration,
+      state: state
+    });
+    this.broadcastToOthers(player.id, packet);
   }
 
   private broadcastToOthers(excludePlayerId: number, data: Buffer): void {
