@@ -19,6 +19,8 @@ gfpsource/
 │   │   └── src/             # network/, types/, index.ts; tests/ with vitest
 │   ├── server/              # Mock game server: GFPServer with modular handlers
 │   │   └── src/             # handlers/, protocol/, types/, index.ts
+│   ├── frontend/            # Phaser 3 frontend (TypeScript + Vite)
+│   │   └── src/             # Game.ts, scenes/, managers/, index.ts
 │   └── docs/                # Architecture, plan, checklist, verify-guide (Chinese)
 ├── 源码架构分析文档.md        # Architecture analysis document (Chinese)
 └── 复刻技术文档.md          # Rebuild technical document (Chinese)
@@ -27,7 +29,7 @@ gfpsource/
 ## Architecture
 
 ### Original Game (AS3)
-- **Thin client**: All damage calculations, drop logic, and validation are server-side (server code is NOT in this repo)
+- **Thin client**: All damage calculations, drop logic, and validation are server-side
 - **Protocol**: TCP binary socket (port 1863), `ByteArray` serialization routed by `CommandID` constants
 - **Command/listener pattern**: `xml/dll.xml` registers 60+ Bean classes (command listeners)
 - **Manager pattern**: Centralized managers (`FightManager`, `MapManager`, etc.)
@@ -35,15 +37,24 @@ gfpsource/
 
 ### Rebuild Project (TypeScript)
 - **Protocol**: WebSocket with binary packet format `[length: 4 bytes LE][commandId: 4 bytes LE][body: variable]`
-- **Server**: `gfp-rebuild/server/src/index.ts` — `GFPServer` class with in-memory player state; handlers extracted into modular files under `handlers/` (MoveHandler, SkillHandler, BattleHandler, ItemHandler, MapHandler)
-- **Client library**: `gfp-rebuild/client/src/` — `SocketClient` (EventEmitter with reconnection), `CommandID.ts` enum (250+ commands), typed data structures (`types/battle.ts`, `types/user.ts`, `types/move.ts`, `types/skill.ts`)
+- **Server**: `gfp-rebuild/server/src/index.ts` — `GFPServer` class with in-memory player state; handlers extracted into modular files under `handlers/`
+- **Client library**: `gfp-rebuild/client/src/` — `SocketClient` (EventEmitter with reconnection), `CommandID.ts` enum (250+ commands), typed data structures
+- **Frontend**: `gfp-rebuild/frontend/src/` — Phaser 3 game engine with `GameNetwork.ts` for WebSocket communication, scenes for Login/Game/Map
 - **Server types**: `server/src/types/` — shared interfaces (Player, Client, GameState, Position) and map-related types (MapInfo, MAP_CONFIG, spawn points)
+
+### Frontend Architecture
+- Game scenes: `LoginScene` (login/role selection) → `GameScene` (main gameplay, portals, multiplayer sync) → `MapScene` (map switch display)
+- `GameNetwork.ts` wraps WebSocket, handles binary packet decode, emits events by command ID
+- `GameScene` tracks local player + other players via `otherPlayers` Map
+- Portals defined per-map in `PORTALS_BY_MAP`, collision detection in `update()`, triggers `cmd:14005` map switch
+- Server sends player list via `cmd:14001` (both batch `{players:[...]}` and single `{userId,...}` formats)
+- Map player list is requested by client via `cmd:10007` after scene loads (avoids timing issues with immediate server push)
 
 ## Missing Pieces
 - **Original server code**: Damage formulas, attr systems, drop tables, validation — must be reverse-engineered or recreated
 - **`com.gfp.core.*` and `com.taomee.*` frameworks**: Core engine classes not in this repo
 - **Game assets**: All visual/audio resources must be extracted from original SWF files
-- **No frontend UI**: The rebuild is protocol-layer only; no React/Phaser frontend exists yet
+- **No game assets yet**: Frontend uses placeholder shapes (red/blue rectangles for players, yellow circles for portals)
 
 ## Development Commands
 
@@ -53,6 +64,14 @@ cd gfp-rebuild/server
 npm run build        # Compile TypeScript -> dist/
 npm run start        # Run the mock server (default port 8080)
 npm run dev          # Build + run in one step
+```
+
+### Run the frontend
+```bash
+cd gfp-rebuild/frontend
+npm run dev          # Vite dev server
+npm run build        # Type-check + build for production
+npx tsc --noEmit     # Type-check only
 ```
 
 ### Build the client library
@@ -85,29 +104,30 @@ node start-server.js  # Launches server in background from repo root
 | Purpose | Path |
 |---------|------|
 | Game entry (AS3) | `clientappdll/src/com/gfp/app/MainEntry.as` |
-| ClientApp entry | `clientappdll/src/ClientAppDLL.as` |
+| ClientApp entry | `clientappdll/src/ClientApp_DLL.as` |
 | ClientCore entry | `clientcoredll/src/ClientCoreDLL.as` |
 | Server (mock) | `gfp-rebuild/server/src/index.ts` |
 | Server packet codec | `gfp-rebuild/server/src/protocol/PacketCodec.ts` |
-| Server move handler | `gfp-rebuild/server/src/handlers/MoveHandler.ts` |
+| Server map handler | `gfp-rebuild/server/src/handlers/MapHandler.ts` |
 | Server type defs | `gfp-rebuild/server/src/types/` |
+| Server map types | `gfp-rebuild/server/src/types/map.ts` |
 | Client socket | `gfp-rebuild/client/src/network/SocketClient.ts` |
 | Client packet encoder | `gfp-rebuild/client/src/network/PacketEncoder.ts` |
 | Client packet decoder | `gfp-rebuild/client/src/network/PacketDecoder.ts` |
 | Command enum (250+) | `gfp-rebuild/client/src/network/CommandID.ts` |
-| Battle types | `gfp-rebuild/client/src/types/battle.ts` |
-| User/Move/Skill types | `gfp-rebuild/client/src/types/` |
+| Frontend entry | `gfp-rebuild/frontend/src/index.ts` |
+| Frontend game config | `gfp-rebuild/frontend/src/Game.ts` |
+| Frontend network wrapper | `gfp-rebuild/frontend/src/managers/GameNetwork.ts` |
+| Frontend game scene | `gfp-rebuild/frontend/src/scenes/GameScene.ts` |
 | Bean registry | `xml/dll.xml` |
 | Server config | `xml/Server.xml` |
-| Architecture doc (AS3) | `源码架构分析文档.md` |
+| Architecture doc (AS3) | `gfp-rebuild/src/com/gfp/app/MainEntry.as` |
 | Rebuild tech doc | `复刻技术文档.md` |
-| Protocol architecture | `gfp-rebuild/docs/architecture.md` |
-| Rebuild plan | `gfp-rebuild/docs/plan.md` |
-| Analysis report | `clientappdll/项目分析报告.md` |
-| Story animation doc | `clientappdll/故事动画系统文档.md` |
 
 ## Notes
-- Test client (`test-client.js`) connects to port 8081 with JSON messages — the actual server listens on port 8080 with binary protocol — port mismatch when running `npm test` from `gfp-rebuild/`
-- The `gfp-rebuild/` root has a separate `package.json` (`gfp-test-client` workspace) that installs `ws` for the test scripts
-- AS3 projects use `asconfig.json` for AIR/SWF compilation: `clientappdll` outputs `bin/clientappdll.swf`, `clientcoredll` outputs `bin/clientcoredll.swf`
+- Frontend connects to `ws://localhost:8080` (defined in `frontend/src/managers/GameNetwork.ts`)
+- Server listens on port 8080, frontend on Vite default port (typically 5173)
+- Map switch uses `cmd:14005`, player list request uses `cmd:10007`
+- Player movement uses `cmd:1001` (MOVE), `cmd:1002` (STAND), `cmd:1003` (JUMP)
 - Each `gfp-rebuild/subproject/` has its own independent `node_modules/` and `tsconfig.json` — no npm workspaces or monorepo tooling
+- AS3 projects use `asconfig.json` for AIR/SWF compilation
