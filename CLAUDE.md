@@ -16,7 +16,10 @@ gfpsource/
 ├── xml/                     # Server config (Server.xml, dll.xml bean registry)
 ├── gfp-rebuild/             # TypeScript rebuild project (WebSocket)
 │   ├── client/              # Protocol layer: SocketClient, PacketEncoder/Decoder, CommandID enum
-│   └── server/              # Mock game server: GFPServer with login/movement/skill handlers
+│   │   └── src/             # network/, types/, index.ts; tests/ with vitest
+│   ├── server/              # Mock game server: GFPServer with modular handlers
+│   │   └── src/             # handlers/, protocol/, types/, index.ts
+│   └── docs/                # Architecture, plan, checklist, verify-guide (Chinese)
 ├── 源码架构分析文档.md        # Architecture analysis document (Chinese)
 └── 复刻技术文档.md          # Rebuild technical document (Chinese)
 ```
@@ -32,9 +35,9 @@ gfpsource/
 
 ### Rebuild Project (TypeScript)
 - **Protocol**: WebSocket with binary packet format `[length: 4 bytes LE][commandId: 4 bytes LE][body: variable]`
-- **Server**: `gfp-rebuild/server/src/index.ts` — `GFPServer` class with in-memory player state, handlers for login (10001/10004/10005/10006), movement (1001/1002/1003/1004), skills (2004), pickup (3001)
-- **Client library**: `gfp-rebuild/client/src/` — `SocketClient` (EventEmitter) with reconnection, `CommandID.ts` enum with 250+ commands, typed data structures for battle and user
-- The rebuild's server handlers are inlined in `index.ts`; the `handlers/` and `types/` directories under `server/src/` are empty
+- **Server**: `gfp-rebuild/server/src/index.ts` — `GFPServer` class with in-memory player state; handlers extracted into modular files under `handlers/` (MoveHandler, SkillHandler, BattleHandler, ItemHandler, MapHandler)
+- **Client library**: `gfp-rebuild/client/src/` — `SocketClient` (EventEmitter with reconnection), `CommandID.ts` enum (250+ commands), typed data structures (`types/battle.ts`, `types/user.ts`, `types/move.ts`, `types/skill.ts`)
+- **Server types**: `server/src/types/` — shared interfaces (Player, Client, GameState, Position) and map-related types (MapInfo, MAP_CONFIG, spawn points)
 
 ## Missing Pieces
 - **Original server code**: Damage formulas, attr systems, drop tables, validation — must be reverse-engineered or recreated
@@ -58,6 +61,14 @@ cd gfp-rebuild/client
 npm run build        # Compile TypeScript -> dist/
 ```
 
+### Run client tests
+```bash
+cd gfp-rebuild/client
+npm test             # Run vitest unit tests (enum/type validation)
+npm run test:watch   # Vitest watch mode
+npm run test:coverage # Coverage report
+```
+
 ### Run test client
 ```bash
 cd gfp-rebuild
@@ -74,15 +85,29 @@ node start-server.js  # Launches server in background from repo root
 | Purpose | Path |
 |---------|------|
 | Game entry (AS3) | `clientappdll/src/com/gfp/app/MainEntry.as` |
+| ClientApp entry | `clientappdll/src/ClientAppDLL.as` |
+| ClientCore entry | `clientcoredll/src/ClientCoreDLL.as` |
 | Server (mock) | `gfp-rebuild/server/src/index.ts` |
 | Server packet codec | `gfp-rebuild/server/src/protocol/PacketCodec.ts` |
+| Server move handler | `gfp-rebuild/server/src/handlers/MoveHandler.ts` |
+| Server type defs | `gfp-rebuild/server/src/types/` |
 | Client socket | `gfp-rebuild/client/src/network/SocketClient.ts` |
 | Client packet encoder | `gfp-rebuild/client/src/network/PacketEncoder.ts` |
 | Client packet decoder | `gfp-rebuild/client/src/network/PacketDecoder.ts` |
 | Command enum (250+) | `gfp-rebuild/client/src/network/CommandID.ts` |
 | Battle types | `gfp-rebuild/client/src/types/battle.ts` |
-| User types | `gfp-rebuild/client/src/types/user.ts` |
+| User/Move/Skill types | `gfp-rebuild/client/src/types/` |
 | Bean registry | `xml/dll.xml` |
 | Server config | `xml/Server.xml` |
-| Architecture doc | `源码架构分析文档.md` |
+| Architecture doc (AS3) | `源码架构分析文档.md` |
 | Rebuild tech doc | `复刻技术文档.md` |
+| Protocol architecture | `gfp-rebuild/docs/architecture.md` |
+| Rebuild plan | `gfp-rebuild/docs/plan.md` |
+| Analysis report | `clientappdll/项目分析报告.md` |
+| Story animation doc | `clientappdll/故事动画系统文档.md` |
+
+## Notes
+- Test client (`test-client.js`) connects to port 8081 with JSON messages — the actual server listens on port 8080 with binary protocol — port mismatch when running `npm test` from `gfp-rebuild/`
+- The `gfp-rebuild/` root has a separate `package.json` (`gfp-test-client` workspace) that installs `ws` for the test scripts
+- AS3 projects use `asconfig.json` for AIR/SWF compilation: `clientappdll` outputs `bin/clientappdll.swf`, `clientcoredll` outputs `bin/clientcoredll.swf`
+- Each `gfp-rebuild/subproject/` has its own independent `node_modules/` and `tsconfig.json` — no npm workspaces or monorepo tooling

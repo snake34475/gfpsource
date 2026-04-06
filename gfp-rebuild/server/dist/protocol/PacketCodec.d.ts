@@ -11,6 +11,16 @@ export declare class PacketDecoder {
     static decode(buffer: Buffer): DecodedPacket;
     private static extractUserId;
     private static decodeBody;
+    private static ensure;
+    private static _binaryDecode;
+    private static decodeMove;
+    private static decodeStand;
+    private static decodeJump;
+    private static decodePvpMove;
+    private static decodeBruise;
+    private static decodeSkill;
+    private static decodeBuff;
+    private static parseJsonBody;
 }
 export declare class PacketEncoder {
     static encode(commandId: number, data?: any): Buffer;

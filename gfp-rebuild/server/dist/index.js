@@ -36,6 +36,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.server = void 0;
 const ws_1 = __importStar(require("ws"));
 const PacketCodec_1 = require("./protocol/PacketCodec");
+const map_1 = require("./types/map");
+const MapHandler_1 = require("./handlers/MapHandler");
 class GFPServer {
     constructor() {
         this.wss = null;
@@ -76,7 +78,14 @@ class GFPServer {
             console.error("[GFP Server] Server error:", error);
         });
         this.registerHandlers();
+        this.initMapHandler();
         this.startHeartbeat();
+    }
+    initMapHandler() {
+        this.handlers.set(14005, (client, data) => {
+            const mapHandler = new MapHandler_1.MapHandler(this.gameState.players, (excludeId, packet) => this.broadcastToOthers(excludeId, packet), (mapId, excludeId, packet) => this.broadcastToMap(mapId, excludeId, packet), (c, cmd, d) => this.sendTo(c, cmd, d));
+            mapHandler.handleMapSwitch(client, data);
+        });
     }
     startHeartbeat() {
         setInterval(() => {
@@ -92,9 +101,14 @@ class GFPServer {
     }
     handleClientDisconnect(client) {
         if (client.player) {
+            const oldMapId = client.player.mapId;
             this.gameState.players.delete(client.player.id);
             console.log(`[GFP Server] Player ${client.player.id} removed from game`);
-            this.broadcastPlayerLeave(client.player.id);
+            // 通知同地图的其他玩家
+            this.broadcastJsonMap(oldMapId, client.player.id, 14003, {
+                userId: client.player.id,
+                mapId: oldMapId,
+            });
         }
     }
     handleMessage(client, data) {
@@ -109,15 +123,6 @@ class GFPServer {
             }
             else {
                 console.log(`[GFP Server] No handler for command ${commandId}`);
-                switch (commandId) {
-                    case 1001:
-                    case 1002:
-                    case 1003:
-                    case 2004:
-                    case 3001:
-                        this.sendError(client, commandId, "Handler not implemented");
-                        break;
-                }
             }
         }
         catch (error) {
@@ -133,7 +138,14 @@ class GFPServer {
         this.handlers.set(3001, this.handleItemPickup.bind(this));
         this.handlers.set(2003, this.handleBruise.bind(this));
         this.handlers.set(2005, this.handleBuffState.bind(this));
-        this.handlers.set(14005, this.handleMapSwitch.bind(this));
+        // 登录/选角/进入游戏
+        this.handlers.set(10001, (client, data) => this.handleLogin(client, data));
+        this.handlers.set(10004, (client, data) => this.handleRoleList(client, data));
+        this.handlers.set(10005, (client, data) => this.handleSelectRole(client, data));
+        this.handlers.set(10006, (client, data) => this.handleEnterGame(client, data));
+        // 请求当前地图上的玩家列表（客户端场景加载完成后调用）
+        this.handlers.set(10007, (client, data) => this.handleGetMapPlayers(client, data));
+        // MAP_SWITCH 在 initMapHandler 中注册
     }
     handleMove(client, data) {
         console.log("[GFP Server] MOVE:", data);
@@ -281,83 +293,14 @@ class GFPServer {
         }
         this.broadcastPlayerBuff(client.player, buffId, buffLevel, buffType, duration, state);
     }
-    handleMapSwitch(client, data) {
-        console.log("[GFP Server] MAP_SWITCH:", data);
-        if (!client.player) {
-            console.log("[GFP Server] Player not initialized for map switch");
-            return;
-        }
-        const targetMapId = data.targetMapId || data.mapId || 0;
-        const teleportType = data.teleportType || 0;
-        const targetX = data.position?.x;
-        const targetY = data.position?.y;
-        // 验证地图是否存在
-        const mapConfig = this.getMapConfig(targetMapId);
-        if (!mapConfig) {
-            console.log(`[GFP Server] Map ${targetMapId} not found`);
-            this.sendTo(client, 14005, { result: 1, error: "Map not found" });
-            return;
-        }
-        // 检查等级限制
-        if (mapConfig.requiredLevel && client.player.level < mapConfig.requiredLevel) {
-            console.log(`[GFP Server] Player level ${client.player.level} too low for map ${targetMapId} (requires ${mapConfig.requiredLevel})`);
-            this.sendTo(client, 14005, { result: 2, error: "Level too low" });
-            return;
-        }
-        // 获取目标地图的出生点
-        const spawnPoint = this.getSpawnPoint(targetMapId, targetX, targetY);
-        // 更新玩家位置
-        client.player.mapId = targetMapId;
-        client.player.pos = spawnPoint;
-        client.player.lastUpdate = Date.now();
-        console.log(`[GFP Server] Player ${client.player.id} switched to map ${targetMapId} (${mapConfig.mapName}) at (${spawnPoint.x}, ${spawnPoint.y})`);
-        // 发送切换成功响应
-        const response = {
-            result: 0,
-            mapId: targetMapId,
-            mapName: mapConfig.mapName,
-            position: spawnPoint,
-            newMapData: {
-                width: mapConfig.width,
-                height: mapConfig.height,
-                isPVP: mapConfig.isPVP || false,
-                isDungeon: mapConfig.isDungeon || false,
-            }
-        };
-        this.sendTo(client, 14005, response);
-        // 通知其他玩家该玩家离开了旧地图
-        this.broadcastPlayerLeave(client.player.id);
-    }
-    getMapConfig(mapId) {
-        const maps = {
-            1001: { mapId: 1001, mapName: "新手村", width: 2000, height: 1500, requiredLevel: 1 },
-            1002: { mapId: 1002, mapName: "竹林深处", width: 2500, height: 2000, requiredLevel: 5 },
-            1003: { mapId: 1003, mapName: "虎口山谷", width: 3000, height: 2500, requiredLevel: 10 },
-            1004: { mapId: 1004, mapName: "蛇影洞", width: 1800, height: 1200, requiredLevel: 15, isDungeon: true },
-            1005: { mapId: 1005, mapName: "竞技场", width: 1500, height: 1500, isPVP: true },
-        };
-        return maps[mapId];
-    }
-    getSpawnPoint(mapId, x, y) {
-        const defaultPoints = {
-            1001: { x: 500, y: 800 },
-            1002: { x: 600, y: 900 },
-            1003: { x: 700, y: 1000 },
-            1004: { x: 400, y: 600 },
-            1005: { x: 750, y: 750 },
-        };
-        if (x !== undefined && y !== undefined) {
-            return { x, y };
-        }
-        return defaultPoints[mapId] || { x: 500, y: 500 };
-    }
-    createPlayer(id) {
+    createPlayer(id, mapId = 1001) {
         const ws = this.getWsByClientId(id);
+        const spawnPoint = map_1.DEFAULT_SPAWN_POINTS[mapId] || { x: 500, y: 800 };
         const player = {
             id,
             ws: ws,
-            mapId: 1001,
-            pos: { x: 500, y: 300 },
+            mapId,
+            pos: { x: spawnPoint.x, y: spawnPoint.y },
             speed: 150,
             moveType: 1,
             direction: 1,
@@ -381,63 +324,100 @@ class GFPServer {
         return undefined;
     }
     validatePosition(mapId, x, y) {
-        if (x < 0 || x > 10000 || y < 0 || y > 10000) {
-            return false;
+        const mapConfig = map_1.MAP_CONFIG[mapId];
+        if (mapConfig) {
+            return x >= 0 && x <= mapConfig.width && y >= 0 && y <= mapConfig.height;
         }
-        return true;
+        return x >= 0 && x <= 10000 && y >= 0 && y <= 10000;
     }
     sendTo(client, commandId, data) {
         if (client.ws.readyState === ws_1.default.OPEN) {
-            const packet = PacketCodec_1.PacketEncoder.encode(commandId, data);
+            const body = Buffer.from(JSON.stringify(data), 'utf8');
+            const length = 4 + body.length;
+            const packet = Buffer.allocUnsafe(8 + body.length);
+            packet.writeUInt32LE(length, 0);
+            packet.writeUInt32LE(commandId, 4);
+            body.copy(packet, 8);
             client.ws.send(packet);
+        }
+    }
+    broadcastJson(excludePlayerId, commandId, data) {
+        const body = Buffer.from(JSON.stringify(data), 'utf8');
+        const length = 4 + body.length;
+        const packet = Buffer.allocUnsafe(8 + body.length);
+        packet.writeUInt32LE(length, 0);
+        packet.writeUInt32LE(commandId, 4);
+        body.copy(packet, 8);
+        for (const [ws, client] of this.clients) {
+            if (client.player && client.player.id !== excludePlayerId && ws.readyState === ws_1.default.OPEN) {
+                ws.send(packet);
+            }
+        }
+    }
+    broadcastJsonAll(commandId, data) {
+        const body = Buffer.from(JSON.stringify(data), 'utf8');
+        const length = 4 + body.length;
+        const packet = Buffer.allocUnsafe(8 + body.length);
+        packet.writeUInt32LE(length, 0);
+        packet.writeUInt32LE(commandId, 4);
+        body.copy(packet, 8);
+        for (const [ws, client] of this.clients) {
+            if (ws.readyState === ws_1.default.OPEN) {
+                ws.send(packet);
+            }
+        }
+    }
+    broadcastJsonMap(mapId, excludePlayerId, commandId, data) {
+        const body = Buffer.from(JSON.stringify(data), 'utf8');
+        const length = 4 + body.length;
+        const packet = Buffer.allocUnsafe(8 + body.length);
+        packet.writeUInt32LE(length, 0);
+        packet.writeUInt32LE(commandId, 4);
+        body.copy(packet, 8);
+        for (const [ws, client] of this.clients) {
+            if (client.player && client.player.id !== excludePlayerId && client.player.mapId === mapId && ws.readyState === ws_1.default.OPEN) {
+                ws.send(packet);
+            }
         }
     }
     sendError(client, commandId, message) {
         this.sendTo(client, 9999, { error: message, commandId });
     }
     broadcastPlayerMove(player) {
-        const data = {
+        this.broadcastJson(player.id, 1001, {
             userId: player.id,
             mapId: player.mapId,
             pos: player.pos,
             speed: player.speed,
             moveType: player.moveType,
-        };
-        const packet = PacketCodec_1.PacketEncoder.encode(1001, data);
-        this.broadcastToOthers(player.id, packet);
+        });
     }
     broadcastPlayerStand(player) {
-        const data = {
+        this.broadcastJson(player.id, 1002, {
             userId: player.id,
             mapId: player.mapId,
             pos: player.pos,
             direction: player.direction,
-        };
-        const packet = PacketCodec_1.PacketEncoder.encode(1002, data);
-        this.broadcastToOthers(player.id, packet);
+        });
     }
     broadcastPlayerJump(player) {
-        const data = {
+        this.broadcastJson(player.id, 1003, {
             userId: player.id,
             pos: player.pos,
-        };
-        const packet = PacketCodec_1.PacketEncoder.encode(1003, data);
-        this.broadcastToOthers(player.id, packet);
+        });
     }
     broadcastPlayerPvpMove(player, timestamp) {
-        const data = {
+        this.broadcastJson(player.id, 1004, {
             userId: player.id,
             pos: player.pos,
             mapId: player.mapId,
             speed: player.speed,
             moveType: player.moveType,
             timestamp,
-        };
-        const packet = PacketCodec_1.PacketEncoder.encode(1004, data);
-        this.broadcastToOthers(player.id, packet);
+        });
     }
     broadcastPlayerSkill(player, skillId, skillLv, x, y, targetId, direction) {
-        const data = {
+        this.broadcastJson(player.id, 2004, {
             userId: player.id,
             skillId,
             skillLv,
@@ -446,20 +426,16 @@ class GFPServer {
             pos: { x, y },
             targetId,
             direction,
-        };
-        const packet = PacketCodec_1.PacketEncoder.encode(2004, data);
-        this.broadcastToOthers(player.id, packet);
+        });
     }
     broadcastPlayerLeave(playerId) {
-        const packet = PacketCodec_1.PacketEncoder.encode(14003, { userId: playerId });
-        this.broadcast(packet);
+        this.broadcastJsonAll(14003, { userId: playerId });
     }
     broadcastPlayerDeath(player) {
-        const packet = PacketCodec_1.PacketEncoder.encode(2003, { userId: player.id, hp: 0, isDead: true });
-        this.broadcast(packet);
+        this.broadcastJsonAll(2003, { userId: player.id, hp: 0, isDead: true });
     }
     broadcastPlayerBruise(player, attackerId, damage, newHp, skillId, hitType, hitCount) {
-        const packet = PacketCodec_1.PacketEncoder.encode(2003, {
+        this.broadcastJson(player.id, 2003, {
             userId: player.id,
             atkerID: attackerId,
             decHP: damage,
@@ -468,10 +444,9 @@ class GFPServer {
             type: hitType,
             hitCount: hitCount
         });
-        this.broadcastToOthers(player.id, packet);
     }
     broadcastPlayerBuff(player, buffId, buffLevel, buffType, duration, state) {
-        const packet = PacketCodec_1.PacketEncoder.encode(2005, {
+        this.broadcastJson(player.id, 2005, {
             userId: player.id,
             buffID: buffId,
             buffLv: buffLevel,
@@ -479,8 +454,20 @@ class GFPServer {
             duration: duration,
             state: state
         });
-        this.broadcastToOthers(player.id, packet);
     }
+    /**
+     * 广播给所有玩家
+     */
+    broadcast(data) {
+        for (const [ws, client] of this.clients) {
+            if (ws.readyState === ws_1.default.OPEN) {
+                ws.send(data);
+            }
+        }
+    }
+    /**
+     * 广播给除了指定玩家之外的所有人
+     */
     broadcastToOthers(excludePlayerId, data) {
         for (const [ws, client] of this.clients) {
             if (client.player && client.player.id !== excludePlayerId) {
@@ -490,12 +477,124 @@ class GFPServer {
             }
         }
     }
-    broadcast(data) {
+    /**
+     * 仅广播给同一地图上的玩家
+     */
+    broadcastToMap(mapId, excludePlayerId, data) {
         for (const [ws, client] of this.clients) {
-            if (ws.readyState === ws_1.default.OPEN) {
-                ws.send(data);
+            if (client.player && client.player.id !== excludePlayerId && client.player.mapId === mapId) {
+                if (ws.readyState === ws_1.default.OPEN) {
+                    ws.send(data);
+                }
             }
         }
+    }
+    /**
+     * 获取地图上指定玩家的信息
+     */
+    sendMapPlayersToClient(client, mapId, excludeId) {
+        const playersOnMap = [];
+        for (const player of this.gameState.players.values()) {
+            if (player.id !== excludeId && player.mapId === mapId) {
+                playersOnMap.push({
+                    userId: player.id,
+                    nickName: player.nickName,
+                    roleType: player.roleType,
+                    level: player.level,
+                    pos: { ...player.pos },
+                    direction: player.direction,
+                    hp: player.hp,
+                    mp: player.mp,
+                });
+            }
+        }
+        if (playersOnMap.length > 0) {
+            this.sendTo(client, 14001, { players: playersOnMap });
+        }
+    }
+    // --- Login handlers ---
+    handleLogin(client, data) {
+        console.log("[GFP Server] LOGIN:", data);
+        const username = data.username || "Guest";
+        client.userId = Math.floor(Math.random() * 10000) + 1;
+        this.sendTo(client, 10001, {
+            result: 0,
+            username,
+            serverTime: Date.now(),
+        });
+        this.sendTo(client, 10004, {
+            roles: [
+                {
+                    actorId: 1,
+                    nickName: username,
+                    roleType: 1,
+                    level: 1,
+                    mapId: 1001,
+                    mapName: "新手村",
+                }
+            ]
+        });
+    }
+    handleRoleList(client, data) {
+        console.log("[GFP Server] ROLE_LIST:", data);
+        this.sendTo(client, 10004, {
+            roles: [
+                {
+                    actorId: 1,
+                    nickName: client.userId.toString(),
+                    roleType: 1,
+                    level: 1,
+                    mapId: 1001,
+                    mapName: "新手村",
+                }
+            ]
+        });
+    }
+    handleSelectRole(client, data) {
+        console.log("[GFP Server] SELECT_ROLE:", data);
+        const actorId = data.actorId || 1;
+        client.actorId = actorId;
+        this.sendTo(client, 10005, {
+            result: 0,
+            actorId,
+        });
+    }
+    handleEnterGame(client, data) {
+        console.log("[GFP Server] ENTER_GAME:", data);
+        if (!client.player) {
+            client.player = this.createPlayer(client.userId);
+        }
+        const mapConfig = map_1.MAP_CONFIG[client.player.mapId];
+        const spawnPoint = map_1.DEFAULT_SPAWN_POINTS[client.player.mapId];
+        this.sendTo(client, 10006, {
+            result: 0,
+            userId: client.player.id,
+            nickName: client.player.nickName,
+            roleType: client.player.roleType,
+            level: client.player.level,
+            mapId: client.player.mapId,
+            mapName: mapConfig?.mapName || "新手村",
+            pos: spawnPoint,
+        });
+        // 向同地图其他玩家广播新玩家
+        this.broadcastJsonMap(client.player.mapId, client.player.id, 14001, {
+            userId: client.player.id,
+            nickName: client.player.nickName,
+            roleType: client.player.roleType,
+            level: client.player.level,
+            mapId: client.player.mapId,
+            pos: spawnPoint,
+            direction: client.player.direction,
+            hp: client.player.hp,
+            mp: client.player.mp,
+        });
+        // 不再立即发送玩家列表，改为客户端 GameScene 加载完成后主动请求
+    }
+    handleGetMapPlayers(client, data) {
+        console.log("[GFP Server] GET_MAP_PLAYERS:", client.player?.id, data);
+        if (!client.player)
+            return;
+        this.sendMapPlayersToClient(client, client.player.mapId, client.player.id);
     }
     getPlayerCount() {
         return this.gameState.players.size;

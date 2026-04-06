@@ -1,12 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MapHandler = void 0;
+const map_1 = require("../types/map");
 class MapHandler {
-    constructor(players, broadcastFunc, sendToFunc) {
+    constructor(players, broadcastToOthers, broadcastToMap, sendToClient) {
+        this.broadcastToOthers = broadcastToOthers;
+        this.broadcastToMap = broadcastToMap;
+        this.sendToClient = sendToClient;
         this.players = players;
-        this.broadcastFunc = broadcastFunc;
-        this.sendToFunc = sendToFunc;
     }
+    /**
+     * 处理地图切换请求 (CMD=14005)
+     * 流程: 验证地图 → 检查权限 → 离开旧地图 → 进入新地图 → 广播通知
+     */
     handleMapSwitch(client, data) {
         console.log("[MapHandler] MAP_SWITCH:", data);
         if (!client.player) {
@@ -14,33 +20,43 @@ class MapHandler {
             return;
         }
         const targetMapId = data.targetMapId || data.mapId || 0;
-        const teleportType = data.teleportType || 0;
+        const teleportType = data.teleportType || 0; // 0=walk, 1=teleport, 2=transition
         const targetX = data.position?.x;
         const targetY = data.position?.y;
         // 验证地图是否存在
-        const mapConfig = this.getMapConfig(targetMapId);
+        const mapConfig = map_1.MAP_CONFIG[targetMapId];
         if (!mapConfig) {
             console.log(`[MapHandler] Map ${targetMapId} not found`);
-            this.sendToFunc(client, 14005, { result: 1, error: "Map not found" });
+            this.sendToClient(client, 14005, { result: 1, mapId: targetMapId, error: "Map not found" });
             return;
         }
         // 检查等级限制
         if (mapConfig.requiredLevel && client.player.level < mapConfig.requiredLevel) {
             console.log(`[MapHandler] Player level ${client.player.level} too low for map ${targetMapId} (requires ${mapConfig.requiredLevel})`);
-            this.sendToFunc(client, 14005, { result: 2, error: "Level too low" });
+            this.sendToClient(client, 14005, { result: 2, mapId: targetMapId, error: "Level too low" });
             return;
         }
-        // 获取目标地图的出生点
+        // 检查副本限制（副本不能直接切换进入）
+        if (mapConfig.isDungeon && teleportType === 0) {
+            console.log(`[MapHandler] Map ${targetMapId} is dungeon, teleport required`);
+            this.sendToClient(client, 14005, { result: 3, mapId: targetMapId, error: "Dungeon requires teleport" });
+            return;
+        }
+        // 获取目标位置
         const spawnPoint = this.getSpawnPoint(targetMapId, targetX, targetY);
-        // 记录旧地图
         const oldMapId = client.player.mapId;
+        // 跳过同一个地图的情况
+        if (oldMapId === targetMapId) {
+            this.sendToClient(client, 14005, { result: 4, mapId: targetMapId, error: "Already on this map" });
+            return;
+        }
         // 更新玩家位置
         client.player.mapId = targetMapId;
-        client.player.pos = spawnPoint;
+        client.player.pos = { ...spawnPoint };
         client.player.lastUpdate = Date.now();
-        console.log(`[MapHandler] Player ${client.player.id} switched from map ${oldMapId} to ${targetMapId} (${mapConfig.mapName}) at (${spawnPoint.x}, ${spawnPoint.y})`);
+        console.log(`[MapHandler] Player ${client.player.id} switched from map ${oldMapId} "${map_1.MAP_CONFIG[oldMapId]?.mapName || 'Unknown'}" to map ${targetMapId} "${mapConfig.mapName}" at (${spawnPoint.x}, ${spawnPoint.y})`);
         // 发送切换成功响应给当前玩家
-        this.sendToFunc(client, 14005, {
+        this.sendToClient(client, 14005, {
             result: 0,
             mapId: targetMapId,
             mapName: mapConfig.mapName,
@@ -50,33 +66,68 @@ class MapHandler {
                 height: mapConfig.height,
                 isPVP: mapConfig.isPVP || false,
                 isDungeon: mapConfig.isDungeon || false,
+                bgMusic: mapConfig.bgMusic || "",
             }
         });
-        // 通知其他玩家该玩家离开了旧地图
-        this.broadcastFunc({ id: -1, mapId: oldMapId, pos: { x: 0, y: 0 } }, { userId: client.player.id });
+        // 通知旧地图的玩家: 该玩家离开了 (CMD=14003 LEAVE_MAP)
+        const leavePacket = this.encodePacket(14003, {
+            userId: client.player.id,
+            mapId: oldMapId,
+        });
+        this.broadcastToMap(oldMapId, client.player.id, leavePacket);
+        // 通知新地图的玩家: 该玩家加入了 (CMD=14001 USER_LIST)
+        const enterPacket = this.encodePacket(14001, {
+            userId: client.player.id,
+            nickName: client.player.nickName,
+            roleType: client.player.roleType,
+            level: client.player.level,
+            mapId: targetMapId,
+            pos: spawnPoint,
+            direction: client.player.direction,
+            hp: client.player.hp,
+            mp: client.player.mp,
+        });
+        this.broadcastToMap(targetMapId, client.player.id, enterPacket);
+        // 给新玩家发送新地图上已有的其他玩家列表
+        this.sendPlayersOnMap(client, targetMapId, client.player.id);
     }
-    getMapConfig(mapId) {
-        const maps = {
-            1001: { mapId: 1001, mapName: "新手村", width: 2000, height: 1500, requiredLevel: 1 },
-            1002: { mapId: 1002, mapName: "竹林深处", width: 2500, height: 2000, requiredLevel: 5 },
-            1003: { mapId: 1003, mapName: "虎口山谷", width: 3000, height: 2500, requiredLevel: 10 },
-            1004: { mapId: 1004, mapName: "蛇影洞", width: 1800, height: 1200, requiredLevel: 15, isDungeon: true },
-            1005: { mapId: 1005, mapName: "竞技场", width: 1500, height: 1500, isPVP: true },
-        };
-        return maps[mapId];
+    /**
+     * 获取地图上所有其他玩家的信息 (CMD=14001 / USER_LIST)
+     */
+    sendPlayersOnMap(client, mapId, excludeId) {
+        const playersOnMap = [];
+        for (const player of this.players.values()) {
+            if (player.id !== excludeId && player.mapId === mapId) {
+                playersOnMap.push({
+                    userId: player.id,
+                    nickName: player.nickName,
+                    roleType: player.roleType,
+                    level: player.level,
+                    pos: { ...player.pos },
+                    direction: player.direction,
+                    hp: player.hp,
+                    mp: player.mp,
+                });
+            }
+        }
+        if (playersOnMap.length > 0) {
+            this.sendToClient(client, 14001, { players: playersOnMap });
+        }
     }
     getSpawnPoint(mapId, x, y) {
-        const defaultPoints = {
-            1001: { x: 500, y: 800 },
-            1002: { x: 600, y: 900 },
-            1003: { x: 700, y: 1000 },
-            1004: { x: 400, y: 600 },
-            1005: { x: 750, y: 750 },
-        };
         if (x !== undefined && y !== undefined) {
             return { x, y };
         }
-        return defaultPoints[mapId] || { x: 500, y: 500 };
+        return map_1.DEFAULT_SPAWN_POINTS[mapId] || { x: 500, y: 500 };
+    }
+    encodePacket(commandId, data) {
+        const jsonStr = JSON.stringify(data);
+        const body = Buffer.from(jsonStr, "utf8");
+        const packet = Buffer.allocUnsafe(4 + 4 + body.length);
+        packet.writeUInt32LE(4 + body.length, 0);
+        packet.writeUInt32LE(commandId, 4);
+        body.copy(packet, 8);
+        return packet;
     }
 }
 exports.MapHandler = MapHandler;
