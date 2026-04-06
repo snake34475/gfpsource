@@ -1,69 +1,24 @@
 import Phaser, { Scene } from 'phaser';
-
-interface OtherPlayer {
-  body: Phaser.GameObjects.Graphics;
-  nameText: Phaser.GameObjects.Text;
-  x: number;
-  y: number;
-  mapId: number;
-  nickName?: string;
-  roleType?: number;
-}
-
-interface Portal {
-  targetMapId: number;
-  x: number;
-  y: number;
-  label: string;
-}
-
-// Portal definitions per map (positions within the 960x540 canvas, grid area: x:50-910, y:80-500)
-const PORTALS_BY_MAP: Record<number, Portal[]> = {
-  1001: [
-    { targetMapId: 1002, x: 880, y: 400, label: "→ 竹林" },
-    { targetMapId: 1003, x: 500, y: 500, label: "→ 山谷" },
-  ],
-  1002: [
-    { targetMapId: 1001, x: 50, y: 350, label: "← 新手村" },
-    { targetMapId: 1005, x: 850, y: 350, label: "→ 竞技场" },
-  ],
-  1003: [
-    { targetMapId: 1001, x: 600, y: 80, label: "← 新手村" },
-    { targetMapId: 1004, x: 800, y: 400, label: "→ 蛇影洞" },
-  ],
-  1004: [
-    { targetMapId: 1003, x: 800, y: 300, label: "← 山谷" },
-  ],
-  1005: [
-    { targetMapId: 1002, x: 50, y: 400, label: "← 竹林" },
-  ],
-};
-
-// Map name lookup
-const MAP_NAMES: Record<number, string> = {
-  1001: "新手村", 1002: "竹林深处", 1003: "虎口山谷", 1004: "蛇影洞", 1005: "竞技场"
-};
-
-// Map background colors
-const MAP_COLORS: Record<number, string> = {
-  1001: '#1a2a1a', 1002: '#1a3a1a', 1003: '#2a2a1a', 1004: '#1a1a2a', 1005: '#2a1a1a'
-};
+import { PlayerEntity } from '../entities/PlayerEntity';
+import { OtherPlayerEntity } from '../entities/OtherPlayerEntity';
+import { PlayerStateMachine } from '../systems/PlayerStateMachine';
+import { Portal } from '../types/portal';
+import { MAP_NAMES, MAP_COLORS, PORTALS_BY_MAP } from '../config/maps';
+import { PlayerState } from '../types/animation';
 
 /**
- * Main game scene — renders the player, map, and handles movement sync.
+ * DNF-style game scene: flat XY plane, 4-directional movement, no gravity/platforms.
+ * Handles local player, remote players, portals, and network sync.
  */
 export class GameScene extends Scene {
-  private playerBody: Phaser.GameObjects.Graphics | null = null;
-  private playerX = 480;
-  private playerY = 300;
-  private cursors: Phaser.Types.Input.Keyboard.CursorKeys | undefined;
+  private player: PlayerEntity | null = null;
   private statusText: Phaser.GameObjects.Text | null = null;
-  private lastMoveTime = 0;
-  private otherPlayers: Map<number, OtherPlayer> = new Map();
-  private portalGroups: Map<number, { body: Phaser.GameObjects.Graphics; text: Phaser.GameObjects.Text }> = new Map();
+  private otherPlayers: Map<number, OtherPlayerEntity> = new Map();
+  private portalIndicators: Phaser.GameObjects.Graphics[] = [];
   private currentMapId = 1001;
   private lastPortalSwitch = 0;
   private mapInfoText: Phaser.GameObjects.Text | null = null;
+  private groundGraphics: Phaser.GameObjects.Graphics | null = null;
 
   constructor() {
     super({ key: 'GameScene' });
@@ -80,88 +35,78 @@ export class GameScene extends Scene {
   }
 
   create(): void {
-    this.cameras.main.setBackgroundColor(MAP_COLORS[this.currentMapId] || '#1a2a1a');
+    this.cameras.main.backgroundColor = Phaser.Display.Color.ValueToColor(MAP_COLORS[this.currentMapId] || '#1a2a1a');
 
-    // Player visual — red rectangle (placeholder)
-    this.playerBody = this.add.graphics().fillStyle(0xff4444);
-    this.drawPlayer();
-
-    // Draw ground / grid
+    // Draw ground surface
     this.drawGround();
-
-    // Draw HUD
-    this.drawHUD();
 
     // Draw portals
     this.drawPortals();
 
-    // Keyboard input
-    this.cursors = this.input.keyboard?.createCursorKeys();
+    // Draw HUD
+    this.drawHUD();
 
     // Status text
-    this.statusText = this.add.text(480, 30, '就绪 - 使用方向键移动', {
-      fontSize: '14px',
+    this.statusText = this.add.text(480, 30, '方向键移动 · 空格跳跃 · 走到传送门切换地图', {
+      fontSize: '13px',
       color: '#ffffff',
     }).setOrigin(0.5);
 
-    // Map info text (bottom of screen)
+    // Map info
     this.mapInfoText = this.add.text(480, 520, `地图: ${MAP_NAMES[this.currentMapId] || '未知'} (${this.currentMapId})`, {
       fontSize: '12px',
       color: '#666688',
     }).setOrigin(0.5);
 
+    // Create local player
+    const spawnX = this.game.registry.get('playerData')?.pos?.x || 480;
+    const spawnY = this.game.registry.get('playerData')?.pos?.y || 300;
+    this.player = new PlayerEntity(this, spawnX, spawnY);
+    this.player.setMapId(this.currentMapId);
+
     // Network listeners
     const network = this.game.registry.get('network');
     if (network) {
-      // Player leave
       network.on('cmd:14003', (data: any) => {
         this.removeOtherPlayer(data.userId);
         this.statusText?.setText(`玩家 ${data.userId} 离开了地图`);
       });
 
-      // Player list on map join / single player join
       network.on('cmd:14001', (data: any) => {
         if (data.players?.length > 0) {
-          // batch player list (from enterGame response)
           for (const pData of data.players) {
             this.addOtherPlayer(pData);
           }
           this.statusText?.setText(`地图上有 ${data.players.length} 个其他玩家`);
         } else if (data.userId !== undefined) {
-          // single player join (broadcast from another player entering)
           this.addOtherPlayer(data);
         }
       });
 
-      // Other player moved
       network.on('cmd:1001', (data: any) => {
         if (data.userId !== undefined) {
-          this.updateOtherPlayerPosition(data.userId, data.pos?.x, data.pos?.y, data.mapId, data.nickName);
+          this.updateOtherPlayer(data.userId, data.pos?.x, data.pos?.y, data.mapId, data.nickName, 1001);
         }
       });
 
-      // Other player stood
       network.on('cmd:1002', (data: any) => {
         if (data.userId !== undefined) {
-          this.updateOtherPlayerPosition(data.userId, data.pos?.x, data.pos?.y, data.mapId, data.nickName);
+          this.updateOtherPlayer(data.userId, data.pos?.x, data.pos?.y, data.mapId, data.nickName, 1002);
         }
       });
 
-      // Other player jumped
       network.on('cmd:1003', (data: any) => {
         if (data.userId !== undefined) {
-          this.updateOtherPlayerPosition(data.userId, data.pos?.x, data.pos?.y, undefined);
+          this.updateOtherPlayer(data.userId, data.pos?.x, data.pos?.y, undefined, data.nickName, 1003);
         }
       });
 
-      // Other player used skill
       network.on('cmd:2004', (data: any) => {
         if (data.userId !== undefined) {
           console.log(`[GameScene] Player ${data.userId} used skill ${data.skillId}`);
         }
       });
 
-      // Map switch response
       network.on('cmd:14005', (data: any) => {
         if (data.result === 0) {
           this.handleMapSwitchSuccess(data);
@@ -176,148 +121,98 @@ export class GameScene extends Scene {
       });
     }
 
-    // Request map players list (after scene is ready with listeners registered)
     network.getMapPlayers();
-
-    // Auto-send initial position
-    this.time.delayedCall(500, () => {
-      const playerData = this.game.registry.get('playerData');
-      if (network && playerData) {
-        network.move(playerData.mapId, playerData.pos?.x || 500, playerData.pos?.y || 300, 150, 1);
-      }
-    });
   }
 
-  update(): void {
-    if (!this.playerBody || !this.cursors) return;
+  update(time: number, delta: number): void {
+    if (this.player) {
+      this.player.update(time);
 
-    const speed = 3;
-    let moved = false;
+      // Portal collision
+      this.checkPortalCollision();
 
-    if (this.cursors.left?.isDown) {
-      this.playerX -= speed;
-      moved = true;
-    }
-    if (this.cursors.right?.isDown) {
-      this.playerX += speed;
-      moved = true;
-    }
-    if (this.cursors.up?.isDown) {
-      this.playerY -= speed;
-      moved = true;
-    }
-    if (this.cursors.down?.isDown) {
-      this.playerY += speed;
-      moved = true;
+      const pos = this.player.getWorldPos();
+      this.statusText?.setText(`地图: ${MAP_NAMES[this.currentMapId]} | 位置: (${Math.round(pos.x)}, ${Math.round(pos.y)})`);
     }
 
-    if (moved) {
-      this.playerBody.clear();
-      this.playerBody.fillStyle(0xff4444);
-      this.drawPlayer();
-
-      const now = Date.now();
-      if (now - this.lastMoveTime > 100) {
-        this.lastMoveTime = now;
-        const network = this.game.registry.get('network');
-        if (network) {
-          const playerData = this.game.registry.get('playerData');
-          network.move(playerData?.mapId || 1001, this.playerX, this.playerY, 150, 1);
-        }
-      }
+    // Smooth update remote players
+    for (const other of this.otherPlayers.values()) {
+      other.smoothUpdate(time, 0.15);
     }
-
-    // Portal collision detection
-    this.checkPortalCollision();
-
-    this.statusText?.setText(`位置: (${Math.round(this.playerX)}, ${Math.round(this.playerY)})`);
   }
 
   // --- Other player management ---
 
   private addOtherPlayer(data: any): void {
     const userId = data.userId;
-    if (this.otherPlayers.has(userId)) return; // already exists
+    if (this.otherPlayers.has(userId)) return;
 
-    const x = data.pos?.x || 500;
+    const x = data.pos?.x || 480;
     const y = data.pos?.y || 300;
 
-    // Other player body — blue rectangle
-    const body = this.add.graphics().fillStyle(0x4488ff);
-    body.fillRect(x - 16, y - 24, 32, 48);
-    body.fillStyle(0xffffff);
-    body.fillRect(x - 8, y - 14, 6, 6);
-    body.fillRect(x + 2, y - 14, 6, 6);
-
-    // Name label above the player
-    const name = data.nickName || `Player${userId}`;
-    const nameText = this.add.text(x, y - 36, name, {
-      fontSize: '11px',
-      color: '#88ccff',
-    }).setOrigin(0.5);
-
-    this.otherPlayers.set(userId, { body, nameText, x, y, mapId: data.mapId || 0, nickName: data.nickName });
-    this.statusText?.setText(`${name} 加入了地图`);
+    const entity = new OtherPlayerEntity(this, userId, x, y, data.nickName);
+    this.otherPlayers.set(userId, entity);
+    this.statusText?.setText(`${data.nickName || `Player${userId}`} 加入了地图`);
   }
 
-  private updateOtherPlayerPosition(userId: number, x: number | undefined, y: number | undefined, mapId: number | undefined, nickName?: string): void {
-    const player = this.otherPlayers.get(userId);
-    if (!player) {
-      // Player not yet created — create on first movement broadcast
+  private updateOtherPlayer(userId: number, x: number | undefined, y: number | undefined, _mapId: number | undefined, nickName?: string, commandId?: number): void {
+    let entity = this.otherPlayers.get(userId);
+    if (!entity) {
       if (x !== undefined && y !== undefined) {
-        this.addOtherPlayer({ userId, x, y, mapId, nickName, pos: { x, y } });
+        entity = new OtherPlayerEntity(this, userId, x, y, nickName);
+        this.otherPlayers.set(userId, entity);
+      } else {
+        return;
       }
-      return;
     }
 
-    if (x !== undefined) player.x = x;
-    if (y !== undefined) player.y = y;
-    if (mapId !== undefined) player.mapId = mapId;
-    if (nickName) player.nickName = nickName;
+    if (x !== undefined && y !== undefined) {
+      entity.setPosition(x, y);
+    }
 
-    // Redraw at new position
-    player.body.clear();
-    player.body.fillStyle(0x4488ff);
-    player.body.fillRect(player.x - 16, player.y - 24, 32, 48);
-    player.body.fillStyle(0xffffff);
-    player.body.fillRect(player.x - 8, player.y - 14, 6, 6);
-    player.body.fillRect(player.x + 2, player.y - 14, 6, 6);
-
-    player.nameText.setPosition(player.x, player.y - 36);
+    if (commandId === 1003) {
+      entity.onJumpStart(this.time.now);
+    } else if (commandId !== undefined) {
+      entity.setState(PlayerStateMachine.inferStateFromCommand(commandId));
+    }
   }
 
   private removeOtherPlayer(userId: number): void {
-    const player = this.otherPlayers.get(userId);
-    if (player) {
-      player.body.destroy();
-      player.nameText.destroy();
+    const entity = this.otherPlayers.get(userId);
+    if (entity) {
+      entity.destroy();
       this.otherPlayers.delete(userId);
     }
   }
 
-  // --- Drawing helpers ---
-
-  private drawPlayer(): void {
-    if (!this.playerBody) return;
-    this.playerBody.fillRect(this.playerX - 16, this.playerY - 24, 32, 48);
-    this.playerBody.fillStyle(0xffffff);
-    this.playerBody.fillRect(this.playerX - 8, this.playerY - 14, 6, 6);
-    this.playerBody.fillRect(this.playerX + 2, this.playerY - 14, 6, 6);
-  }
+  // --- Rendering ---
 
   private drawGround(): void {
-    const ground = this.add.graphics();
-    ground.lineStyle(2, 0x336633);
-    ground.strokeRect(50, 80, 860, 420);
+    if (this.groundGraphics) this.groundGraphics.destroy();
+    this.groundGraphics = this.add.graphics();
 
-    const grid = this.add.graphics();
-    grid.lineStyle(1, 0x224422, 0.3);
-    for (let x = 50; x <= 910; x += 40) {
-      grid.lineBetween(x, 80, x, 500);
-    }
+    // Ground plane (flat surface)
+    this.groundGraphics.fillStyle(0x2a4a2a, 1);
+    this.groundGraphics.fillRect(20, 80, 920, 420);
+
+    // Grid lines for depth perception
+    this.groundGraphics.lineStyle(1, 0x3a6a3a, 0.4);
     for (let y = 80; y <= 500; y += 40) {
-      grid.lineBetween(50, y, 910, y);
+      this.groundGraphics.lineBetween(20, y, 940, y);
     }
+    for (let x = 20; x <= 940; x += 40) {
+      this.groundGraphics.lineBetween(x, 80, x, 500);
+    }
+
+    // Ground border
+    this.groundGraphics.lineStyle(2, 0x4a8a4a);
+    this.groundGraphics.strokeRect(20, 80, 920, 420);
+
+    // Depth label hint
+    this.add.text(480, 95, '(前) ↑ Y 纵深 ↑ (后)', {
+      fontSize: '10px',
+      color: '#5a8a5a',
+    }).setOrigin(0.5);
   }
 
   private drawHUD(): void {
@@ -333,135 +228,100 @@ export class GameScene extends Scene {
   }
 
   private drawPortals(): void {
-    const portals = PORTALS_BY_MAP[this.currentMapId] || [];
-    this.portalGroups.clear();
+    for (const g of this.portalIndicators) g.destroy();
+    this.portalIndicators = [];
 
-    const mapName = this.game.registry.get('playerData')?.mapName;
-    // Reset HUD on each map switch
-    this.add.rectangle(0, 0, 0, 0, 0x000000).destroy();
+    const portals = PORTALS_BY_MAP[this.currentMapId] || [];
 
     for (const portal of portals) {
       const body = this.add.graphics();
-      // Portal circle — yellow, pulsing effect
       body.lineStyle(2, 0xffff00, 1);
       body.fillStyle(0xffff00, 0.2);
       body.fillCircle(portal.x, portal.y, 20);
       body.strokeCircle(portal.x, portal.y, 20);
-
-      // Glow ring
       body.lineStyle(1, 0xffff00, 0.4);
       body.strokeCircle(portal.x, portal.y, 26);
+      this.portalIndicators.push(body);
 
-      const text = this.add.text(portal.x, portal.y - 28, portal.label, {
+      this.add.text(portal.x, portal.y - 28, portal.label, {
         fontSize: '12px',
         color: '#ffff88',
       }).setOrigin(0.5);
 
-      // Portal target map label below
-      const targetInfo = this.add.text(portal.x, portal.y + 28, MAP_NAMES[portal.targetMapId] || '', {
+      this.add.text(portal.x, portal.y + 28, MAP_NAMES[portal.targetMapId] || '', {
         fontSize: '10px',
         color: '#aaaacc',
       }).setOrigin(0.5);
-
-      this.portalGroups.set(portal.targetMapId, { body, text });
     }
   }
 
   private checkPortalCollision(): void {
+    if (!this.player) return;
     const portals = PORTALS_BY_MAP[this.currentMapId] || [];
     if (portals.length === 0) return;
 
     const now = Date.now();
-    const cooldown = 1500;
+    if (now - this.lastPortalSwitch < 1500) return;
 
-    if (now - this.lastPortalSwitch < cooldown) return;
+    const pos = this.player.getWorldPos();
 
     for (const portal of portals) {
-      const dx = this.playerX - portal.x;
-      const dy = this.playerY - portal.y;
+      const dx = pos.x - portal.x;
+      const dy = pos.y - portal.y;
       const dist = Math.sqrt(dx * dx + dy * dy);
 
-      // DEBUG: always log distance
-      if (dist < 150) {
-        console.log(`[Portal] Player(${this.playerX},${this.playerY}) -> Portal(${portal.x},${portal.y}) dist=${dist.toFixed(0)}`);
-      }
-
-      if (dist < 60) {
-        console.log(`[Portal] TRIGGERED! dist=${dist.toFixed(0)}`);
+      if (dist < 40) {
         this.lastPortalSwitch = now;
         this.switchMap(portal.targetMapId, portal);
-        break; // Only switch one portal at a time
+        break;
       }
     }
   }
 
   private switchMap(targetMapId: number, portal: Portal): void {
-    console.log('[Portal] switchMap called:', targetMapId, portal);
     const network = this.game.registry.get('network');
-    if (!network) {
-      console.warn('[Portal] network is null!');
-      return;
-    }
-    console.log('[Portal] network found, mapId:', targetMapId, 'pos:', { x: portal.x, y: portal.y });
+    if (!network) return;
 
     this.statusText?.setText(`正在切换到 ${portal.label} ...`);
     network.mapSwitch(targetMapId, 0, { x: portal.x, y: portal.y });
-    console.log('[Portal] mapSwitch sent');
   }
 
   private handleMapSwitchSuccess(data: any): void {
-    // Update current map info
     this.currentMapId = data.mapId;
-    const mapInfo = data.newMapData;
 
-    // Reposition player to the server-confirmed spawn point
-    if (data.position) {
-      this.playerX = data.position.x;
-      this.playerY = data.position.y;
-      this.playerBody?.clear();
-      this.playerBody?.fillStyle(0xff4444);
-      this.drawPlayer();
+    if (this.player && data.position) {
+      this.player.reposition(data.position.x, data.position.y);
+    }
+    if (this.player) {
+      this.player.setMapId(data.mapId);
     }
 
-    // Update registry
     const playerData = this.game.registry.get('playerData');
     if (playerData) {
       playerData.mapId = data.mapId;
       playerData.mapName = data.mapName;
     }
 
-    // Clear existing portals and other players
-    for (const group of this.portalGroups.values()) {
-      group.body.destroy();
-      group.text.destroy();
-    }
-    this.portalGroups.clear();
-
-    // Clear all existing other players
-    for (const [id, player] of this.otherPlayers) {
-      player.body.destroy();
-      player.nameText.destroy();
+    // Clear portals and other players
+    for (const g of this.portalIndicators) g.destroy();
+    this.portalIndicators = [];
+    for (const [_, entity] of this.otherPlayers) {
+      entity.destroy();
     }
     this.otherPlayers.clear();
 
-    // Update visuals for new map
-    this.cameras.main.setBackgroundColor(MAP_COLORS[this.currentMapId] || '#1a2a1a');
-
-    // Redraw portals for the new map
+    // Redraw
+    this.cameras.main.backgroundColor = Phaser.Display.Color.ValueToColor(MAP_COLORS[this.currentMapId] || '#1a2a1a');
+    this.drawGround();
     this.drawPortals();
-
-    // Update map info text
     this.mapInfoText?.setText(`地图: ${data.mapName || MAP_NAMES[this.currentMapId] || '未知'} (${this.currentMapId})`);
 
-    // Request player list on the new map
     const network = this.game.registry.get('network');
     network?.getMapPlayers();
 
     this.statusText?.setText(`已到达 ${data.mapName}`);
     this.time.delayedCall(2000, () => {
-      if (this.statusText) {
-        this.statusText.setColor('#ffffff');
-      }
+      if (this.statusText) this.statusText.setColor('#ffffff');
     });
   }
 }
